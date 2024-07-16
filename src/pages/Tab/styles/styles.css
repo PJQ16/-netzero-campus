@@ -1,0 +1,11 @@
+.input-container {
+    border: 1px solid #ced4da; /* เส้นขอบ */
+    border-radius: 5px; /* ขอบมน */
+    padding: 10px; /* ระยะห่างของเนื้อหาภายใน */
+}
+
+.input-container input[type="file"] {
+    border: none; /* เอาเส้นขอบออก */
+    outline: none; /* เอาเส้นขอบของ input ออก */
+    width: 100%; /* ขยาย input ให้เต็มพื้นที่ */
+}
