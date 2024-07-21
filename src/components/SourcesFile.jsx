@@ -85,19 +85,20 @@ export default function SourcesFile() {
   };
 
   return (
-    <div>  <div className="card shadow text-center">
+    <div className='col-md-12'>  <div className="card text-center mt-2">
     <div
       className="card-header"
       style={{
         marginTop: "auto",
+        color:"#CF6464"
       }}
     >
-      Uploads ไฟล์เอกสารหลักฐาน <br/> (ขนาดไฟล์: 4 MB สูงสุด 2 ไฟล์)
+      Uploads ไฟล์เอกสารหลักฐาน <br/> ขนาดไฟล์: 4 MB สูงสุด 5 ไฟล์ (ถ้ามี)
     </div>
     <div
-      className="card-bod"
+      className="card-body"
       style={{
-        backgroundColor:'#DEDBD8',
+        backgroundColor:'#7FACC5',
         marginTop: "auto"
       }}
     >

@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
+    "@material/drawer": "^14.0.0",
     "@mui/icons-material": "^5.15.14",
     "@mui/material": "^5.15.14",
     "@mui/x-charts": "^7.0.0",
@@ -23,7 +24,10 @@
     "bootstrap": "^5.3.3",
     "exceljs": "^4.4.0",
     "firebase": "^10.11.1",
+    "jquery": "^3.7.1",
+    "mdb-react-ui-kit": "^8.0.0",
     "mui-tiptap": "^1.8.6",
+    "perfect-scrollbar": "^1.5.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intersection-observer": "^9.10.3",

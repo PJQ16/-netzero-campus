@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import config from '../../config';
 import { useParams } from 'react-router-dom';
+import { Tooltip } from '@mui/material';
 
 function TabActivityLocation() {
   const [imageLocations, setImageLocations] = useState([]);
@@ -103,7 +104,8 @@ function TabActivityLocation() {
 return (
   <div>
     <div className="row mb-3">
-      <p className='h2 text-center'>แผนภาพองค์กร</p>
+      <p className='h2 text-center mt-2'>ภาพโพรไฟล์ (Profile) ขององค์กร</p>
+      
        <div className="col-md-12 d-flex justify-content-center">
         {showImages.length > 0 ? (
           showImages.map((image) => (
@@ -117,16 +119,19 @@ return (
                     className="img-fluid"
                   />
                 </label>
-
               </div>
               </div>
             </div>
           ))
         ) : (
           <div className="card">
+             <center className='fw-bold mt-3'>กรุณาอัพโหลดไฟล์ภาพโพรไฟล์ขององค์กร</center>
+             <sub className='text- text-center mt-2'>(Upload รูปภาพองค์กร มีขนาดไม่เกิน 2 MB สูงสุด 5 ภาพ )</sub> 		
             <div className="card-body d-flex justify-content-center align-items-center flex-wrap">
               {imageLocations.map((image, index) => (
+                <Tooltip title={'กดคลิกที่รูปกล้องถ่ายรูปและเลือกไฟล์เพื่อ upload '} placement="top" >
                 <div key={index} style={{ position: 'relative', marginRight: '10px', marginBottom: '10px' }}>
+                  
                   <img
                     src={image.src}
                     alt={`Image ${index + 1}`}
@@ -140,9 +145,11 @@ return (
                     &#x2715;
                   </button>
                 </div>
+                </Tooltip>
               ))}
               {imageLocations.length < 5 && (
                 <label htmlFor="fileInput">
+                  
                   <img
                     src="https://media.istockphoto.com/id/1248723171/vector/camera-photo-upload-icon-on-isolated-white-background-eps-10-vector.jpg?s=612x612&w=0&k=20&c=e-OBJ2jbB-W_vfEwNCip4PW4DqhHGXYMtC3K_mzOac0="
                     alt="Upload"
@@ -165,7 +172,9 @@ return (
             {imageLocations.length > 0 && (
               <button  className='btn' style={{backgroundColor:'#D6C2F1'}} onClick={handleSubmit}>บันทึก</button>
             )}
+           
           </div>
+        
           
         )}
       </div>

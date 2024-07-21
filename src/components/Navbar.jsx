@@ -11,7 +11,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import HomeIcon from '@mui/icons-material/Home';
 import FactoryIcon from "@mui/icons-material/Factory";
 import SearchComponent from './Search'; 
-import Calenda from './Calenda'; 
+
 function Navbar() {
 
   const navigate = useNavigate();
@@ -135,8 +135,8 @@ function Navbar() {
                <li className="nav-item">
                <Link className="nav-link " to="/login" onClick={goLogin} ><LoginIcon /> เข้าสู่ระบบ</Link>
              </li>
-                    <Calenda /> 
-                   <SearchComponent />  
+                  {/*   <Calenda />  */}
+                  {/*  <SearchComponent />   */}
                 </>
               )}
 

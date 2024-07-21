@@ -132,7 +132,7 @@ export default function TransferList({ onSendData, headCategory }) {
 
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center">
-      <Grid item>{customList('Choices', left)}</Grid>
+      <Grid item>{customList('กิจกรรม', left)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -157,7 +157,7 @@ export default function TransferList({ onSendData, headCategory }) {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList('Chosen', right)}</Grid>
+      <Grid item>{customList('กิจกรรมที่เลือก', right)}</Grid>
       <Grid item>
         {right.length > 0 &&
           <Button

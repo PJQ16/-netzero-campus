@@ -3,12 +3,12 @@ import React from 'react';
 export default function Tab({ children }) {
   return (
     <div>
-      <ul className="nav nav-tabs mb-2 bg-light" id="pills-tab" role="tablist">
+      <ul className="nav nav-tabs mb-2" style={{backgroundColor:'#0E3B43'}} id="pills-tab" role="tablist">
         {React.Children.map(children, (child, index) => (
           <li className="nav-item" role="presentation">
             <button
               className={`nav-link ${index === 0 ? 'active' : ''}`}
-              style={{color:'#000'}}
+              style={{color:'#A3BBAD'}}
               id={`pills-tab-${index}`}
               data-bs-toggle="pill"
               data-bs-target={`#pills-content-${index}`}
@@ -30,6 +30,7 @@ export default function Tab({ children }) {
             role="tabpanel"
             aria-labelledby={`pills-tab-${index}`}
             tabIndex="0"
+            style={{backgroundColor:'#0000'}}
           >
             {child}
           </div>

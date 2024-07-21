@@ -14,7 +14,7 @@ const StyledText = styled('text')(({ theme }) => ({
 
 const StyledPieChart = styled(PieChart)(({ theme }) => ({
   width: '100%',
-  height: 'auto',
+  height: '100%', // เปลี่ยน height เป็น 100% เพื่อให้กราฟใช้ขนาดจากคอนเทนเนอร์ที่ห่อหุ้ม
   [theme.breakpoints.up('sm')]: {
     width: '50%',
   },
@@ -35,11 +35,11 @@ function PieCenterLabel({ children }) {
   );
 }
 
-export default function TabActivitySummary({scopeData,percentages,years}) { 
+export default function TabActivitySummary({ scopeData, percentages, years }) {
   const colors = {
-    'Scope 1': '#0E3B43',
-    'Scope 2': '#357266',
-    'Scope 3': '#A3BBAD',
+    'ขอบเขตที่ 1: การปล่อยและดูดกลับก๊าซเรือนกระจกทางตรง': '#26E59C',
+    'ขอบเขตที่ 2: การปล่อยก๊าซเรือนกระจกทางอ้อม': '#357266',
+    'ขอบเขตที่ 3: การปล่อยก๊าซเรือนกระจกทางอ้อม': '#A3BBAD',
     'Biogenic Carbon': '#65532F',
     'Removal': '#312509',
   };
@@ -51,39 +51,44 @@ export default function TabActivitySummary({scopeData,percentages,years}) {
         <div className="col-md-5 m-3">
           <div className="card shadow border-0">
             <div className="card-body">
-              <StyledPieChart
-                margin={{ top: 50, bottom: 50, left: 50, right: 50 }}
-                slotProps={{
-                  legend: {
-                    direction: 'row',
-                    position: { vertical: 'top', horizontal: 'middle' },
-                    padding: 0,
-                  },
-                }}
-                series={[
-                  {
-                    data: scopeData.map((item) => ({
-                      id: item.id,
-                      value: parseFloat(item.tco2e),
-                      label: item.name,
-                      color: colors[item.name] || 'gray',
-                    })),
-                    arcLabel: (item) => {
-                      const percentage = percentages.find((p) => p.label === item.label)?.percentage;
-                      return isNaN(parseFloat(percentage)) ? '' : `${percentage}%`;
+              <div style={{ height: '600px' }}> {/* กำหนด height สำหรับคอนเทนเนอร์ */}
+                <StyledPieChart
+                  margin={{ top: 50, bottom: 50, left: 50, right: 50 }}
+                  slotProps={{
+                    legend: {
+                      direction: 'column',
+                      position: { vertical: 'bottom', horizontal: 'left' },
+                      padding: 0,
                     },
-                    highlightScope: { faded: 'global', highlighted: 'item' },
-                    faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-                    innerRadius: 100,
-                    outerRadius: 180,
-                    paddingAngle: 3,
-                    cornerRadius: 10,
-                    endAngle: 360,
-                  },
-                ]}
-              >
-                <PieCenterLabel>ผลการคำนวณ  ปี {years} </PieCenterLabel>
-              </StyledPieChart>
+                  }}
+                  series={[
+                    {
+                      data: scopeData.map((item) => ({
+                        id: item.id,
+                        value: parseFloat(item.tco2e),
+                        label: item.name,
+                        color: colors[item.name] || 'gray',
+                      })),
+                      arcLabel: (item) => {
+                        const percentage = percentages.find((p) => p.label === item.label)?.percentage;
+                        if (parseFloat(percentage) === 0) {
+                          return '';
+                        }
+                        return isNaN(parseFloat(percentage)) ? '' : `${percentage}%`;
+                      },
+                      highlightScope: { faded: 'global', highlighted: 'item' },
+                      faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                      innerRadius: 100,
+                      outerRadius: 180,
+                      paddingAngle: 3,
+                      cornerRadius: 10,
+                      endAngle: 360,
+                    },
+                  ]}
+                >
+                  <PieCenterLabel>ผลการคำนวณ ปี {years}</PieCenterLabel>
+                </StyledPieChart>
+              </div>
             </div>
           </div>
         </div>

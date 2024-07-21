@@ -103,7 +103,7 @@ function TabActivityOrganization() {
 return (
   <div>
     <div className="row  mb-3">
-    <p className='h2 text-center'>โครงสร้างองค์กร</p>
+    <p className='h2 text-center mt-2'>ภาพโครงสร้างขององค์กร</p>
       <div className="col-md-12 d-flex justify-content-center">
         {showImages.length > 0 ? (
           showImages.map((image) => (
@@ -124,6 +124,8 @@ return (
           ))
         ) : (
           <div className="card">
+             <center className='fw-bold mt-3'> กรุณาอัพโหลดไฟล์ภาพโครงการสร้างขององค์กร	</center>
+             <sub className='text- text-center mt-2'>(Upload รูปภาพองค์กร มีขนาดไม่เกิน 2 MB สูงสุด 5 ภาพ )</sub> 
             <div className="card-body d-flex justify-content-center align-items-center flex-wrap">
               {imageLocations.map((image, index) => (
                 <div key={index} style={{ position: 'relative', marginRight: '10px', marginBottom: '10px' }}>

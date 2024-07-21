@@ -1,31 +1,33 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
-import './css/style.css';
+import React from 'react'
+import './pae/assets/css/demo/style.css'
+import './pae/assets/vendors/flag-icon-css/css/flag-icon.min.css'
+import './pae/assets/vendors/css/vendor.bundle.base.css'
+import './pae/assets/vendors/flag-icon-css/css/flag-icon.min.css'
 
-let currentYear = new Date().getFullYear();
 
-export default function Footer() {
-  const location = useLocation();
+function Footer() {
 
-  // Define the path for which the footer should be displayed normally
-  const normalFooterPath = '/';
-
-  // Determine the class for the footer
-  const footerClass = location.pathname === normalFooterPath ? 'bg-body-light text-center' : ' bg-body-light text-center';
 
   return (
-    <div>
-      <footer
-      
-        className={`${footerClass}`}
-      >
-        <div className="text-center p-1 ">
-          <p className="text-body-light">
-            Copyright ©{currentYear} Energy Research and Development Institute - Nakornping (ERDI), Chiang Mai
-            University. All Rights Reserved.
-          </p>
+
+        <div className="page-wrapper mdc-toolbar-fixed-adjust">
+
+        <footer>
+            <div className="mdc-layout-grid">
+              <div className="mdc-layout-grid__inner">
+                <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                  <span className="text-center text-sm-left d-block d-sm-inline-block tx-14">Copyright ©  2024 | NET ZERO CAMPUS (Demo Version)</span>
+                </div>
+                <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex justify-content-end">
+          
+                </div>
+              </div>
+            </div>
+        </footer>
+  
         </div>
-      </footer>
-    </div>
-  );
+
+  )
 }
+
+export default Footer

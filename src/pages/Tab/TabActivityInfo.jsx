@@ -1,14 +1,14 @@
 import React from 'react';
 import Map from '../../components/Map';
 
-function TabActivityInfo({ infos, latitude, setLatitude, longitude, setLongitude, setEmployee, setArea, handlerSubmitUpdate }) {
+function TabActivityInfo({  student, setStudent, campusReport,setCampusReport, totalArea, setTotalArea,infos, latitude, setLatitude, longitude, setLongitude, setEmployee, setArea, handlerSubmitUpdate }) {
   return (
     <div>
       {infos.map((info, index) => (
         <div className="row" key={index}>
-          <p className='h2'>ข้อมูลทั่วไป</p>
+          <p className='h2 '>ข้อมูลทั่วไป</p>
           <div className="col-md-12">
-            <div className="card bg-light border-0 mb-3">
+            <div className="card border-0 ">
               <div className="card-body">
                 <div className="row px-2">
                   <div className="col-md-6">
@@ -30,81 +30,114 @@ function TabActivityInfo({ infos, latitude, setLatitude, longitude, setLongitude
                     <div className="col-md-12 mx-2">
                       <div className="card border-0 shadow">
                         <div className="card-body">
-                          <div className="row">
-                            <form>
-                              <div className="row p-3">
-                                <div className="col-md-12">
-                                  <label  htmlFor="ชื่อ">ชื่อ</label>
-                                  <input
+
+                        <form>
+                          <table className="table table-bordered table-striped">
+                            <thead>
+                              <tr>
+                              <th className='text-start' colSpan={2}>กรุณากรอกข้อมูลทั่วไปของหน่วยงาน</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                           <tr>
+                            <td className='text-start'>มหาวิทยาลัย/สถาบัน</td>
+                            <td><input
                                     type="text"
                                     className="form-control"
                                     value={info.faculty.fac_name}
                                     readOnly
+                                  /></td>
+                           </tr>
+                           <tr>
+                            <td className='text-start'>วิทยาเขตที่รายงานข้อมูล</td>
+                            <td><input
+                                    type="text"
+                                    className="form-control"
+                                    defaultValue={info.campus_report}
+                                    onChange={(e) => setCampusReport(e.target.value)}
                                   />
-                                </div>
-
-                                <div className="col-md-12 mt-2">
-                                  <label  htmlFor="จำนวนพนักงาน">จำนวนพนักงาน</label>
-                                  <input
+                            </td>
+                           </tr>
+                           <tr>
+                            <td className='text-start'>จำนวนพนักงานประจำ (คน)</td>
+                            <td><input
                                     type="number"
                                     className="form-control"
                                     defaultValue={info.employee_amount}
                                     onChange={(e) => setEmployee(e.target.value)}
+                                  /></td>
+                           </tr>
+                           <tr>
+                            <td className='text-start'>จำนวนนักศึกษา (คน)</td>
+                            <td>
+                            <input
+                                    type="number"
+                                    className="form-control"
+                                    defaultValue={info.student_amount}
+                                    onChange={(e) => setStudent(e.target.value)}
                                   />
-                                </div>
-
-                                <div className="col-md-12 mt-2">
-                                  <label htmlFor='พื้นที่ใช้สอย'>พื้นที่ใช้สอย</label>
-                                  <input
+                            </td>
+                           </tr>
+                           <tr>
+                            <td className='text-start'>พื้นทั้งหมด (ตารางเมตร)</td>
+                            <td><input
+                                    type="number"
+                                    className="form-control"
+                                    defaultValue={info.total_area}
+                                    onChange={(e) => setTotalArea(e.target.value)}
+                                  /></td>
+                           </tr>
+                           <tr>
+                            <td className='text-start'>พื้นที่อาคาร (ตารางเมตร)</td>
+                            <td>
+                            <input
                                     type="number"
                                     className="form-control"
                                     defaultValue={info.building_area}
                                     onChange={(e) => setArea(e.target.value)}
                                   />
-                                </div>
-
-                                <div className="col-md-12 mt-2">
-                                  <label htmlFor='Latitude'>Latitude</label>
-                                  <input
+                            </td>
+                           </tr>
+                           <tr>
+                            <td className='text-start'>Latitude</td>
+                            <td> <input
                                     type="number"
                                     className="form-control"
                                     disabled
                                     value={latitude}
-                                  />
-                                </div>
-
-                                <div className="col-md-12 mt-2">
-                                  <label htmlFor='Longitude'>Longitude</label>
-                                  <input
+                                  /></td>
+                           </tr>
+                           <tr>
+                            <td className='text-start'>Longitude</td>
+                            <td><input
                                     type="number"
                                     className="form-control"
                                     disabled
                                     value={longitude}
-                                  />
-                                </div>
-
-                                <div className="col-md-12 mt-2">
-                                  <label htmlFor='รูปแบบการคำนวณ'>รูปแบบการคำนวณ</label>
-                                  <input
+                                  /></td>
+                           </tr>
+                           <tr>
+                            <td className='text-start'>รูปแบบการคำนวณ</td>
+                            <td><input
                                     type="text"
                                     className="form-control"
                                     value='องค์การบริหารจัดการก๊าซเรือนกระจก (องค์การมหาชน)'
                                     disabled
-                                  />
-                                </div>
-
-                                <div className="col-md-12 mt-2">
-                                  <label htmlFor='ปีฐาน'>ปีฐาน</label>
-                                  <input
+                                  /></td>
+                           </tr>
+                           <tr>
+                            <td className='text-start'>ปีฐาน</td>
+                            <td> <input
                                     type="number"
                                     className="form-control"
                                     disabled
                                     value='2566'
-                                  />
-                                </div>
-                              </div>
-                              <div className="col-md-12 ms-3">
-                                <button 
+                                  /></td>
+                           </tr>
+
+                            </tbody>
+                          </table>
+                          <button 
                                   className="btn" 
                                   type="button" 
                                   onClick={(event) => handlerSubmitUpdate(event,info)} 
@@ -112,9 +145,8 @@ function TabActivityInfo({ infos, latitude, setLatitude, longitude, setLongitude
                                 >
                                   บันทึกข้อมูล
                                 </button>
-                              </div>
-                            </form>
-                          </div>
+                                </form>
+                          
                         </div>
                       </div>
                     </div>
