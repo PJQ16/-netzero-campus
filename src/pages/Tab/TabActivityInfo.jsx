@@ -53,8 +53,9 @@ function TabActivityInfo({  student, setStudent, campusReport,setCampusReport, t
                             <td><input
                                     type="text"
                                     className="form-control"
-                                    defaultValue={info.campus_report}
-                                    onChange={(e) => setCampusReport(e.target.value)}
+                                    disabled
+                                    value={info.campus_report}
+                                   
                                   />
                             </td>
                            </tr>

@@ -3,15 +3,15 @@ import './pae/assets/css/demo/style.css'
 import './pae/assets/vendors/flag-icon-css/css/flag-icon.min.css'
 import './pae/assets/vendors/css/vendor.bundle.base.css'
 import './pae/assets/vendors/flag-icon-css/css/flag-icon.min.css'
-import Calenda from './Calenda'
-import { YearContext } from '../App'
 import { UserContext } from './MyContext'
 import config from '../config'
+import { ActiveDSBContext } from '../pages/ActiveDashboard'
+import CalendaActive from './CalendaActive'
 
 
-function HeadBar() {
+function HeadBarActive() {
 
-const {selectedYear} = useContext(YearContext);
+const {selectedYear} = useContext(ActiveDSBContext);
 const {userData} = useContext(UserContext);
 
   return (
@@ -23,8 +23,8 @@ const {userData} = useContext(UserContext);
               <span className=""></span>
               <div className="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
               <i className="material-icons mdc-text-field__icon">search</i>
-               <Calenda /> 
-                <input className="mdc-text-field__input" value={selectedYear + 543} onChange={(e) => selectedYear(e.target.value)} id="text-field-hero-input" />
+               <CalendaActive /> 
+               <input className="mdc-text-field__input" value={selectedYear + 543} onChange={(e) => selectedYear(e.target.value)} id="text-field-hero-input" />
                 <div className="mdc-notched-outline">
                 <div className="mdc-notched-outline__leading"></div>
                   <div className="mdc-notched-outline__notch">
@@ -86,4 +86,4 @@ const {userData} = useContext(UserContext);
   )
 }
 
-export default HeadBar
+export default HeadBarActive

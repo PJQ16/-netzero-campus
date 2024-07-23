@@ -38,7 +38,7 @@ function SignIn() {
           timerProgressBar: true,
         });
         localStorage.setItem(config.token_name, res.data.token);
-        navigate("/activitydata");
+        navigate("/dashboard");
       } else if (res.data.message === "User not found") {
         Swal.fire({
           title: "Sign In",

@@ -48,6 +48,7 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
     <div>
       <div className="row">
         <p className="h2 ms-3">สรุปผลการคำนวณ</p>
+        
         <div className="col-md-5 m-3">
           <div className="card shadow border-0">
             <div className="card-body">
@@ -98,17 +99,17 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
               <div className="table-responsive">
                 <table className="table table-bordered table-striped table-hover">
                   <thead>
-                    <tr className="text-center">
-                      <th>ขอบเขต</th>
-                      <th>Greenhouse Gas Emissions (tCO<sub>2</sub>e)</th>
-                      <th>Ratio Scope 1 and 2</th>
-                      <th>Ratio Scope 1 and 2 3</th>
+                    <tr >
+                      <th className="text-center">ขอบเขต</th>
+                      <th className="text-center">Greenhouse Gas Emissions (tCO<sub>2</sub>e)</th>
+                      <th className="text-center">Ratio Scope 1 and 2</th>
+                      <th className="text-center">Ratio Scope 1 and 2 3</th>
                     </tr>
                   </thead>
                   <tbody>
                     {scopeData.map((item, index) => (
                       <tr className="text-center" key={index}>
-                        <td>{item.name}</td>
+                        <td className="text-start">{item.name}</td>
                         <td>{parseFloat(item.tco2e).toFixed(2)}</td>
                         <td>
                           {item.name === 'scope1' || item.name === 'scope2'
@@ -127,7 +128,7 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
                       </tr>
                     ))}
                     <tr className="text-center">
-                      <td>ผลรวม Scope 1 & 2</td>
+                      <td className="text-start">ผลรวม Scope 1 & 2</td>
                       <td>
                         {scopeData
                           .reduce((acc, item) => {
@@ -142,7 +143,7 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
                       <td>-</td>
                     </tr>
                     <tr className="text-center">
-                      <td>ผลรวม Scope 1 & 2 & 3</td>
+                      <td className="text-start">ผลรวม Scope 1 & 2 & 3</td>
                       <td>{scopeData.reduce((acc, item) => acc + parseFloat(item.tco2e), 0).toFixed(2)}</td>
                       <td>-</td>
                       <td>100</td>

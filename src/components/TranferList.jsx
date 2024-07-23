@@ -26,6 +26,7 @@ export default function TransferList({ onSendData, headCategory }) {
   const [checked, setChecked] = useState([]);
   const [left, setLeft] = useState([]);
   const [right, setRight] = useState([]);
+ 
 
   useEffect(() => {
     if (headCategory.headCategory) {
@@ -94,8 +95,8 @@ export default function TransferList({ onSendData, headCategory }) {
       <Divider />
       <List
         sx={{
-          width: 200,
-          height: 230,
+          width: 330,
+          height: 600,
           bgcolor: 'background.paper',
           overflow: 'auto',
         }}
@@ -170,5 +171,6 @@ export default function TransferList({ onSendData, headCategory }) {
         }
       </Grid>
     </Grid>
+    
   );
 }

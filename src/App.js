@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
-import Login from './pages/Login';
 import ActivityData from './pages/ActivityData';
 import ActivityDetail from './pages/ActivityDetail';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -30,6 +29,7 @@ import Organization from './pages/Organization';
 import CreateGHG from './pages/CreateGHG';
 import Summary from './pages/Sumary';
 import Report from './pages/Report';
+import ActiveDashboard from './pages/ActiveDashboard';
 
 export const YearContext = createContext();
 function App() {
@@ -78,12 +78,12 @@ function App() {
   }, [selectedYear]);
 
   useEffect(() => {
-    fetchDashboard();
-  }, []);
+    fetchDashboard(selectedYear);
+  }, [selectedYear]);
 
   const fetchDashboard = async () => {
     try {
-      const res = await axios.get(config.urlApi + "/dataDashboard");
+      const res = await axios.get(config.urlApi + `/dataDashboard/${selectedYear}`);
       setDashboard(res.data.result);
     } catch (e) {
       toast.error(`${e.message} เกิดข้อผิดพลาด`);
@@ -330,6 +330,7 @@ function App() {
             <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/signUp' element={<SignUp  />} />
             <Route path='/activitydata' element={<Demo  />} />
+            <Route path='/dashboard' element={<ActiveDashboard  />} />
           {/*   <Route path='/activitydata' element={<ActivityData  />} /> */}
             <Route path='/activityDetail/:campus_id/:fac_id/:years/:id' element={<ActivityDetail/>} />
             <Route path='/activityProfile/:campus_id/:fac_id/:years/:id' element={<Profile/>} />

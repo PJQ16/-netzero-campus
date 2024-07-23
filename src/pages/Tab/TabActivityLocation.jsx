@@ -105,7 +105,6 @@ return (
   <div>
     <div className="row mb-3">
       <p className='h2 text-center mt-2'>ภาพโพรไฟล์ (Profile) ขององค์กร</p>
-      
        <div className="col-md-12 d-flex justify-content-center">
         {showImages.length > 0 ? (
           showImages.map((image) => (

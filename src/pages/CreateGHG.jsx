@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import Layout from '../components/Layout'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import AsideBar from '../components/AsideBar'
 import HeadBar from '../components/HeadBar'
 import TabActivity from './Tab/TabActivity'
 import axios from 'axios'
 import config from '../config'
 import Swal from 'sweetalert2'
+import { UserContext } from '../components/MyContext'
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 
 export default function CreateGHG() {
@@ -19,6 +22,9 @@ export default function CreateGHG() {
     const [activities, setActivities] = useState([]);
     const [quantities, setQuantities] = useState([]);
     const [countAvg, setCountAvg] = useState(null);
+    const {userData, setUserData } = useContext(UserContext);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         fetchDataApi();
@@ -289,7 +295,9 @@ export default function CreateGHG() {
     
             await Promise.all(payloads.map(payload => axios.post(config.urlApi + `/generateActivity/${id}/${fac_id}/${campus_id}`, payload)
             ));
+           
             fetchDataApi();
+      
           }
     
         } catch (e) {
@@ -300,6 +308,40 @@ export default function CreateGHG() {
           });
         }
       };
+  
+    useEffect(() => {
+      fetchData();
+  },[userData.facultyID]);
+  
+  const fetchData = async () => {
+      try {
+        const response = await axios.get(config.urlApi + '/users/showUserApi', config.headers());
+  
+        if (response.data.message === 'success') {
+          setUserData({
+            firstname: response.data.result.fname,
+            surname: response.data.result.sname,
+            roleName: response.data.result.role.role_name,
+            facultyName: response.data.result.faculty.fac_name,
+            campusName: response.data.result.faculty.campus.campus_name,
+            facultyID: response.data.result.faculty.id,
+            campusID: response.data.result.faculty.campus_id,
+            latitude: response.data.result.faculty.latitude,
+            longitude: response.data.result.faculty.longitude,
+            logo: response.data.result.faculty.logo
+          });
+        }
+      } catch (error) {
+       
+          navigate('/login')
+          Swal.fire({
+              icon:'warning',
+              title:'warning',
+              text:'กรุณาเข้าสู่ระบบด้วย Email และ password'
+          })
+        
+      }
+    };
   return (
     <div className="body-wrapper">
     <AsideBar /> 
@@ -311,8 +353,8 @@ export default function CreateGHG() {
           <TabActivity deleteList={deleteList} handleSubmitData={handleSubmitData} id={id} campus_id={campus_id} fac_id={fac_id} handleInputChange={handleInputChange} formData={formData}  setFormData={setFormData} modalData={modalData} setModalData={setModalData} insertDataActivity={insertDataActivity}  handlerRemoveHead={handlerRemoveHead} activities={activities} handdlerFuel={handdlerFuel} handleQuantityChange={handleQuantityChange} handleSendData={handleSendData} headCategory={headCategory} setHeadCategory={setHeadCategory}  />
 
           <div className="d-flex flex-row justify-content-between">
-           <Link to={`/activityOrganization/${campus_id}/${fac_id}/${years}/${id}`} className="btn btn-outline-primary me-3">ย้อนกลับ</Link>
-          <Link to={`/activitySummary/${campus_id}/${fac_id}/${years}/${id}`}  className="btn btn-outline-primary me-3">ถัดไป</Link> 
+           <Link to={`/activityOrganization/${campus_id}/${fac_id}/${years}/${id}`} className="btn btn-outline-primary me-3"><KeyboardDoubleArrowLeftIcon/> ย้อนกลับ</Link>
+          <Link to={`/activitySummary/${campus_id}/${fac_id}/${years}/${id}`}  className="btn btn-outline-primary me-3">ถัดไป <KeyboardDoubleArrowRightIcon/></Link> 
           </div>
           </div>
           </div>

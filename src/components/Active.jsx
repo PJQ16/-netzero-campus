@@ -3,17 +3,13 @@ import './pae/assets/css/demo/style.css'
 import './pae/assets/vendors/flag-icon-css/css/flag-icon.min.css'
 import './pae/assets/vendors/css/vendor.bundle.base.css'
 import './pae/assets/vendors/flag-icon-css/css/flag-icon.min.css'
-import axios from 'axios'
-import config from '../config'
-import Swal from 'sweetalert2'
-import { toast } from 'react-toastify'
 import Card from './Card'
 import { Link } from 'react-router-dom'
 import Modal from './Modal'
 import { PieChart } from "@mui/x-charts/PieChart";
-import { YearContext } from '../App'
+import { ActiveDSBContext } from '../pages/ActiveDashboard'
 
-function Main() {
+function Active() {
   const {dashboard,
     updatedTest,
     ranking,
@@ -28,38 +24,19 @@ function Main() {
     dataRatio,
     modalContent,
     selectedYear,
-    groupedData } = useContext(YearContext)
+    groupedData } = useContext(ActiveDSBContext)
   return (
     <div className="page-wrapper mdc-toolbar-fixed-adjust">
 
         <main className="content-wrapper">
             <div className="mdc-layout-grid">
               <div className="mdc-layout-grid__inner">
-                <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet">
-                  <div className="mdc-card info-card info-card--success">
-                    <div className="card-inner">
-                      <h5 className="card-title" style={{color: 'green', fontWeight: '800', fontSize: '18px'}}>จำนวนสถาบันที่เข้าร่วม</h5>
-                      {dashboard.education.length > 0 ? (
-                        dashboard.education.map((edu, index) => (
-                          <h5 key={index} className="font-weight-light pb-2 mb-1 border-bottom" style={{ fontSize: '30px', fontWeight: '500' }}>
-                            {edu.educational}
-                          </h5>
-                        ))
-                      ) : (
-                        <p>Loading....</p>
-                      )}
-                      <p className="tx-12 text-muted">จำนวนสถาบัน</p>
-                        <div className="card-icon-wrapper">
-                          <i className="material-icons">dvr</i>
-                        </div>
-                    </div>
-                  </div>
-                </div>
+               
 
-                <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet">
+                <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-6-tablet">
                   <div className="mdc-card info-card info-card--danger">
                     <div className="card-inner">
-                    <h5 className="card-title" style={{color: 'orangered', fontWeight: '800', fontSize: '18px'}}>จำนวนสถาบันที่รายงาน</h5>
+                    <h5 className="card-title" style={{color: 'orangered', fontWeight: '800', fontSize: '18px'}}>จำนวนที่รายงาน</h5>
                     {dashboard.report.length > 0 ? (
                                     dashboard.report.map((rp, index) => (
                     <h5 className="font-weight-light pb-2 mb-1 border-bottom" key={index} style={{fontSize: '30px', fontWeight: '500'}}>{rp.report}</h5>
@@ -67,7 +44,7 @@ function Main() {
                     ) : (
                       <p>Loading....</p>
                     )}
-                    <p className="tx-12 text-muted">จำนวนสถาบัน</p>
+                    <p className="tx-12 text-muted">จำนวนรายงาน</p>
                       <div className="card-icon-wrapper">
                         <i className="fa fa-file-text mdc-drawer-item-icon"></i>
                       </div>
@@ -75,13 +52,13 @@ function Main() {
                   </div>
                 </div>
 
-              <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet">
+              <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-6-tablet">
                 <div className="mdc-card info-card info-card--info">
                   <div className="card-inner">
                     <h5 className="card-title" style={{color: 'rgb(0, 204, 204)', fontWeight: '800', fontSize: '13px'}}>การปล่อยก๊าซเรือนกระจกสะสม</h5>
                     {dashboard.total.length > 0 ? (
                                     dashboard.total.map((ghg, index) => (
-                    <h5 className="font-weight-light pb-2 mb-1 border-bottom" key={index} style={{fontSize: '30px', fontWeight: '500'}}>{parseInt(ghg.tCO2e).toLocaleString()}</h5>
+                    <h5 className="font-weight-light pb-2 mb-1 border-bottom"  key={index}  style={{fontSize: '30px', fontWeight: '500'}}>{parseInt(ghg.tCO2e).toLocaleString()}</h5>
                     ))
                     ) : (
                       <p>Loading....</p>
@@ -126,7 +103,7 @@ function Main() {
                                         className="img-fluid rounded-start ms-2"
                                         style={{ fontSize: 100 }}
                                         sx={{ color: "white" }}
-                                        key={index}
+                                        key={index} 
                                       />
                                     ),
                                     title: item.num,
@@ -531,4 +508,4 @@ function Main() {
   )
 }
 
-export default Main
+export default Active

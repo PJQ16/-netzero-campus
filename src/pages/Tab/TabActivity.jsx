@@ -42,6 +42,7 @@ function TabActivity({
     <div>
       <p className="h2 mt-2">กิจกรรมการปล่อยก๊าซเรือนกระจก</p>
       <div>
+      {!hasActivities ? (<></>):(
         <button
           className="btn btn-primary"
           data-bs-toggle="modal"
@@ -49,11 +50,12 @@ function TabActivity({
         >
           <DnsIcon /> เพิ่มรายชื่อกิจกรรม
         </button>
+      )
+}
         <div className="d-flex justify-content-end">
           <div className="align-items-end">
             <button
               className="btn btn-secondary ms-2"
-              type="button"
               data-bs-toggle="offcanvas"
               data-bs-target="#separateCalculate"
               aria-controls="separateCalculate"
@@ -65,9 +67,16 @@ function TabActivity({
       </div>
 
       {!hasActivities ? (
-        <div className="d-flex justify-content-center" style={{ height: 500 }}>
-          <p className="text-center h3">ไม่พบข้อมูล</p>
+        <>
+        
+        <div className="d-flex flex-row justify-content-center" style={{ height: 'auto' }}>
+          <TransferList
+          onSendData={handleSendData}
+          headCategory={{ headCategory, setHeadCategory }}
+          />
         </div>
+       
+        </>
       ) : (
         activities.map((activity, activityIndex) =>
           activity.headcategories.length === 0 ? null : (
@@ -81,11 +90,16 @@ function TabActivity({
                       title={`${headIndex + 1}.) ${headCategory.head_name} `}
                       expanded={headCategory.id === 0}
                     >
-                      {headCategory.id === 11 ||
+                      {
                       headCategory.id === 30 ||
                       headCategory.id === 31 ||
                       headCategory.id === 32 ||
-                      headCategory.id === 33 ? (
+                      headCategory.id === 33 ||
+                      headCategory.id === 39 ||
+                     
+                      headCategory.id === 43 ||
+                      headCategory.id === 56
+                      ? (
                         <button
                           className="btn btn-success mb-2"
                           onClick={handdlerFuel}
@@ -149,11 +163,15 @@ function TabActivity({
                                         <td className="text-start">{data_scope.name}</td>
                                         <td className="text-center">{data_scope.lci}</td>
                                         <td className="text-center">
-                                          {data_scope.head_id === 11 ||
-                                          data_scope.head_id === 30 ||
-                                          data_scope.head_id === 31 ||
-                                          data_scope.head_id === 32 ||
-                                          data_scope.head_id === 33 ? (
+                                          {headCategory.id === 30 ||
+                                            headCategory.id === 31 ||
+                                            headCategory.id === 32 ||
+                                            headCategory.id === 33 ||
+                                            headCategory.id === 39 ||
+                                           
+                                            headCategory.id === 43 ||
+                                            headCategory.id === 56
+                                           ? (
                                             <form>
                                               <input
                                                 type="number"
@@ -236,7 +254,10 @@ function TabActivity({
                                 );
                               }
                             )}
-                      <Tooltip placement="bottom" title={`เพิ่มกิจกรรมอื่นๆ`}>
+                     
+                          </tbody>
+                        </table>
+                        <Tooltip placement="bottom" title={`เพิ่มกิจกรรมอื่นๆ`}>
                                                 <button
                                                   className="btn my-1 mx-1 btn-success fw-bold"
                                                   data-bs-toggle="modal"
@@ -253,8 +274,6 @@ function TabActivity({
                         </Tooltip>
 
                             <SourcesFile />
-                          </tbody>
-                        </table>
                       </div>
                     </Accordion>
                   </div>

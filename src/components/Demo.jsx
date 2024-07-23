@@ -14,6 +14,7 @@ import Footer from './Footer'
 import AsideBar from './AsideBar'
 import HeadBar from './HeadBar'
 import { UserContext } from './MyContext'
+import Modal from './Modal'
 
 function Demo() {
     const navigate = useNavigate();
@@ -21,6 +22,10 @@ function Demo() {
     const [dataPeriods, setDataPeriods] = useState([]);
     const [searchYear, setSearchYear] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [year, setYear] = useState('');
+    const [campusReport, setCampusReport] = useState('');
+    const [errors, setErrors] = useState({});
+  
     const itemsPerPage = 12;
 
     useEffect(() => {
@@ -99,20 +104,69 @@ function Demo() {
 
     const getStatusDetails = (status) => {
         switch (status) {
-          case 0:
+          case '0':
             return { text: 'ยังไม่มีการดำเนินการ', color: 'gray' };
-          case 1:
-            return { text: 'กำลังดำเนินการ', color: '#ADD8E6' }; // สีฟ้าอ่อนๆ
-          case 2:
+          case '1':
+            return { text: 'กำลังดำเนินการ', color: 'lightcyan' }; // สีฟ้าอ่อนๆ
+          case '2':
             return { text: 'รอตรวจสอบ', color: 'blue' };
-          case 3:
+          case '3':
             return { text: 'ตรวจสอบเรียบร้อย', color: '#90EE90' }; // สีเขียวอ่อน
-          case 4:
+          case '4':
             return { text: 'เกิดข้อผิดพลาด', color: 'red' };
           default:
             return { text: 'ไม่ทราบสถานะ', color: 'black' };
         }
       };
+
+  // ฟังก์ชันเพื่อจัดการการเปลี่ยนแปลงของ select
+  const handleYearChange = (e) => {
+    setYear(e.target.value);
+  };
+
+  // ฟังก์ชันเพื่อจัดการการเปลี่ยนแปลงของ input
+  const handleCampusNameChange = (e) => {
+    setCampusReport(e.target.value);
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!year) newErrors.year = 'กรุณาเลือกปี';
+    if (!campusReport) newErrors.campusReport = 'กรุณากรอกชื่อวิทยาเขต';
+    return newErrors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // ตรวจสอบข้อผิดพลาด
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    // สร้าง payload
+    const payload = {
+      years: year-543,
+      fac_id: userData.facultyID,
+      campus_id: userData.campusID,
+      campus_report: campusReport,
+    };
+
+    try {
+     
+      const res = await axios.post(config.urlApi +`/createAcivity/addPeriod`,payload);
+      setCampusReport('');
+      setSearchYear('');
+      fetchDataPeriod(); 
+      document.getElementById('btnClose').click();
+
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      // คุณสามารถเพิ่มการแจ้งเตือนหรือการดำเนินการอื่นๆ ที่นี่
+    }
+  };
   return (
     <div className="body-wrapper">
     <AsideBar /> 
@@ -147,7 +201,7 @@ function Demo() {
                <div className="mdc-card">
                   <div className="d-flex flex-row justify-content-between align-items-center">
                     <h6 className="card-title mb-2 mb-sm-0">รายงานการปล่อยก๊าซเรือนกระจก</h6>
-                    <button className='btn btn-secondary'><LibraryAddIcon/> สร้างรายงานการปล่อยก๊าซเรือนกระจก</button>
+                    <button className='btn btn-secondary' data-bs-toggle="modal" data-bs-target="#ModalAddActivity"><LibraryAddIcon/> สร้างรายงานการปล่อยก๊าซเรือนกระจก</button>
                   </div>
                 
                   <div className="d-block d-sm-flex justify-content-between align-items-center">
@@ -169,8 +223,9 @@ function Demo() {
                         <tr className='text-center'>
                             <th>ลำดับ</th>
                             <th>ปีที่รายงาน</th>
+                            <th>วิทยาเขตที่รายงานข้อมูล</th>
                             <th>สถานะ</th>
-                            <th>เพิ่มเติม</th>
+                            <th>กรอกข้อมูล</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -181,7 +236,8 @@ function Demo() {
                             <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{item.years + 543}</td>
-                            <td className='text-secondary' style={{ color: statusDetails.color }}>
+                            <td>{item.campus_report}</td>
+                            <td style={{ color: statusDetails.color }}>
                                 {statusDetails.text}
                             </td>
                             <td>
@@ -211,6 +267,37 @@ function Demo() {
         <Footer />
       </div>
     </div>
+    <Modal title='สร้างรายงานกิจกรรมการปล่อยก๊าซเรือนกระจก' id='ModalAddActivity'>
+    <form onSubmit={handleSubmit}>
+      <div className="row">
+        <div className="col-md-6">
+          <label>เลือกปีที่รายงาน</label>
+          <select
+            value={year}
+            onChange={handleYearChange}
+            className='form-control'
+          >
+            <option value="">เลือกปี</option>
+            <option value="2566">2566</option>
+            <option value="2567">2567</option>
+          </select>
+          {errors.year && <div className="text-danger">{errors.year}</div>}
+        </div>
+
+        <div className="col-md-6">
+          <label>ชื่อวิทยาเขตที่รายงานข้อมูล</label>
+          <input
+            type="text"
+            value={campusReport}
+            onChange={handleCampusNameChange}
+            className="form-control"
+          />
+          {errors.campusReport && <div className="text-danger">{errors.campusReport}</div>}
+        </div>
+      </div>
+      <button type="submit" className="btn btn-primary my-2">บันทึก</button>
+    </form>
+    </Modal>
     </div>
   
   )

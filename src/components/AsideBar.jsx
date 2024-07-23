@@ -10,40 +10,70 @@ import { UserContext } from './MyContext';
 import config from '../config';
 import Swal from 'sweetalert2';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import axios from 'axios';
 
 function AsideBar() {
-  const {userData,setUserData} = useContext(UserContext);
-   const navigate = useNavigate();
-   const handlerSignOut = (event) => {
+  const { userData, setUserData } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchData();
+  }, [userData.facultyID]);
+
+  const fetchData = async () => {
     try {
-      event.preventDefault();
-      
-      Swal.fire({
-        icon: 'question',
-        title: 'ออกจากระบบ',
-        text: 'ต้องการออกจากระบบหรือไม่?',
-        showConfirmButton: true,
-        showCancelButton: true
-      }).then(res => {
-        if (res.isConfirmed) {
-          Swal.fire({
-            icon: 'success',
-            title: 'ออกจากระบบ',
-            text: 'ออกจากระบบเรียบร้อย',
-            showConfirmButton: false,
-            showCancelButton: false,
-            timer: 800,
-            timerProgressBar: true,
-          })
-          localStorage.removeItem(config.token_name);
-          setUserData('');
-          navigate('/');
-        }
-      })
-    } catch (e) {
-      console.log(e.message);
+      const response = await axios.get(config.urlApi + '/users/showUserApi', config.headers());
+
+      if (response.data.message === 'success') {
+        setUserData({
+          firstname: response.data.result.fname,
+          surname: response.data.result.sname,
+          roleName: response.data.result.role.role_name,
+          facultyName: response.data.result.faculty.fac_name,
+          campusName: response.data.result.faculty.campus.campus_name,
+          facultyID: response.data.result.faculty.id,
+          campusID: response.data.result.faculty.campus_id,
+          latitude: response.data.result.faculty.latitude,
+          longitude: response.data.result.faculty.longitude,
+          logo: response.data.result.faculty.logo
+        });
+      } else {
+        // กรณีที่ไม่สำเร็จ อาจจะตั้งค่า userData เป็นค่าว่าง
+        setUserData({});
+      }
+    } catch (error) {
+      console.error(error);
+      setUserData({});
     }
   };
+
+  const handlerSignOut = (event) => {
+    event.preventDefault();
+
+    Swal.fire({
+      icon: 'question',
+      title: 'ออกจากระบบ',
+      text: 'ต้องการออกจากระบบหรือไม่?',
+      showConfirmButton: true,
+      showCancelButton: true
+    }).then(res => {
+      if (res.isConfirmed) {
+        Swal.fire({
+          icon: 'success',
+          title: 'ออกจากระบบ',
+          text: 'ออกจากระบบเรียบร้อย',
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 800,
+          timerProgressBar: true,
+        });
+        localStorage.removeItem(config.token_name);
+        setUserData({});
+        navigate('/');
+      }
+    });
+  };
+
   useEffect(() => {
     const drawer = MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
 
@@ -116,59 +146,56 @@ function AsideBar() {
   return (
     <aside className="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
       <div className="mdc-drawer__header">
-      <Link to={'/'}  className="brand-logo"><img src={logo} alt="logo" /> </Link>
+        {userData && userData.firstname ? (
+          <Link to={'/dashboard'} className="brand-logo"><img src={logo} alt="logo" /></Link>
+        ) : (
+          <Link to={'/'} className="brand-logo"><img src={logo} alt="logo" /></Link>
+        )}
       </div>
       <div className="mdc-drawer__content">
         <div className="mdc-list-group">
           <nav className="mdc-list mdc-drawer-menu">
             <div className="mdc-list-item mdc-drawer-item">
-              <Link to={'/'} className="mdc-drawer-link">
-                <i className="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
-                Dashboard
-              </Link>
+              {userData && userData.firstname ? (
+                <Link to={'/dashboard'} className="mdc-drawer-link">
+                  <i className="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
+                  Dashboard
+                </Link>
+              ) : (
+                <Link to={'/'} className="mdc-drawer-link">
+                  <i className="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
+                  Dashboard
+                </Link>
+              )}
             </div>
-            {/* <div className="mdc-list-item mdc-drawer-item">
-              <a href={'#'} className="mdc-drawer-link">
-                <i className="fa fa-bars mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true"></i>
-                เกี่ยวกับ
-              </a>
-            </div> */}
-             {userData && userData.firstname ? (
+
+
+            {userData && userData.firstname && (
             <div className="mdc-list-item mdc-drawer-item">
-              <a href="#!" className="mdc-expansion-panel-link" data-toggle="expansionPanel" data-target="ui-sub-menu">
-                <i className="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">grid_on</i>
-                การกรอกข้อมูล
-                <i className="mdc-drawer-arrow material-icons">chevron_right</i>
-              </a>
-              <div className="mdc-expansion-panel" id="ui-sub-menu">
-                <nav className="mdc-list mdc-drawer-submenu">
-                  <div className="">
-                    <Link to={`/activitydata`} className="mdc-drawer-link">
-                      - การปล่อยก๊าซเรือนกระจก
-                    </Link>
-                  </div>
-                </nav>
-              </div>
+
+                <Link  to={`/activitydata`} className="mdc-drawer-link">
+                  <i className="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">info</i>
+                  กรอกข้อมูล
+                </Link>
             </div>
-            ) : (
-              <></>
             )}
+            
 
             {userData && userData.firstname ? (
-  <div className="mdc-list-item mdc-drawer-item">
-    <a href={'#'} onClick={handlerSignOut} className="mdc-drawer-link">
-    <MeetingRoomIcon/>
-      ออกจากระบบ
-    </a>
-  </div>
-) : (
-  <div className="mdc-list-item mdc-drawer-item">
-    <Link to={'/login'} className="mdc-drawer-link">
-    <MeetingRoomIcon/>
-      เข้าสู่ระบบ
-    </Link>
-  </div>
-)}
+              <div className="mdc-list-item mdc-drawer-item">
+                <a href={'#'} onClick={handlerSignOut} className="mdc-drawer-link">
+                  <MeetingRoomIcon />
+                  ออกจากระบบ
+                </a>
+              </div>
+            ) : (
+              <div className="mdc-list-item mdc-drawer-item">
+                <Link to={'/login'} className="mdc-drawer-link">
+                  <MeetingRoomIcon />
+                  เข้าสู่ระบบ
+                </Link>
+              </div>
+            )}
           </nav>
         </div>
       </div>

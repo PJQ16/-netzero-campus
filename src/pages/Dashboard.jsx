@@ -169,9 +169,6 @@ export default function Dashboard() {
       title: `อันดับ ${index + 1}`,
       body: `${rankId.eg}`,
     });
-    toast.info("แสดงข้อมูลสำเร็จ", {
-      autoClose: 600,
-    });
   };
 
   // Calculate total emission
