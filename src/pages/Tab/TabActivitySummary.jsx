@@ -37,7 +37,7 @@ function PieCenterLabel({ children }) {
 
 export default function TabActivitySummary({ scopeData, percentages, years }) {
   const colors = {
-    'ขอบเขตที่ 1: การปล่อยและดูดกลับก๊าซเรือนกระจกทางตรง': '#26E59C',
+    'ขอบเขตที่ 1: การปล่อยก๊าซเรือนกระจกทางตรง': '#26E59C',
     'ขอบเขตที่ 2: การปล่อยก๊าซเรือนกระจกทางอ้อม': '#357266',
     'ขอบเขตที่ 3: การปล่อยก๊าซเรือนกระจกทางอ้อม': '#A3BBAD',
     'Biogenic Carbon': '#65532F',
@@ -66,7 +66,7 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
     {
       data: scopeData
         .filter(item => 
-          item.name === 'ขอบเขตที่ 1: การปล่อยและดูดกลับก๊าซเรือนกระจกทางตรง' || 
+          item.name === 'ขอบเขตที่ 1: การปล่อยก๊าซเรือนกระจกทางตรง' || 
           item.name === 'ขอบเขตที่ 2: การปล่อยก๊าซเรือนกระจกทางอ้อม' || 
           item.name === 'ขอบเขตที่ 3: การปล่อยก๊าซเรือนกระจกทางอ้อม'
         )
