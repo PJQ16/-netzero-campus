@@ -118,9 +118,9 @@ function SignIn() {
                   เข้าสู่ระบบ
                 </button>
               )}
-              <a className="text-muted" href="#!">
+            {/*   <a className="text-muted" href="#!">
                 Forgot password?
-              </a>
+              </a> */}
             </div>
 
             <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">

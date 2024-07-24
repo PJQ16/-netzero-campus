@@ -91,11 +91,11 @@ function App() {
   };
 
   const test = [
-    { num: "TOTAL EMISSION", color: "#a12A0A", icon: Co2Icon, tCO2e: 0 },
-    { num: "GHG Removal", color: "#6B9A5B", icon: SpaIcon, tCO2e: 0 },
-    { num: "Scope 1", color: "#1C87D7", icon: LocalGasStationIcon, tCO2e: 0 },
-    { num: "Scope 2", color: "#2752D1", icon: BoltIcon, tCO2e: 0 },
-    { num: "Scope 3", color: "#754ABF", icon: FlightLandIcon, tCO2e: 0 },
+    { num: "TOTAL EMISSION",title:'การปล่อยก๊าซเรือนกระจกทั้หมด', color: "#a12A0A", icon: Co2Icon, tCO2e: 0 },
+    { num: "GHG Removal",title:'การดูดกลับก๊าซเรือนกระจก', color: "#6B9A5B", icon: SpaIcon, tCO2e: 0 },
+    { num: "Scope 1",title:'การปล่อยก๊าซเรือนกระจกทางตรง', color: "#1C87D7", icon: LocalGasStationIcon, tCO2e: 0 },
+    { num: "Scope 2",title:'การปล่อยก๊าซเรือนกระจกทางอ้อม', color: "#2752D1", icon: BoltIcon, tCO2e: 0 },
+    { num: "Scope 3",title:'การปล่อยก๊าซเรือนกระจกทางอ้อม', color: "#754ABF", icon: FlightLandIcon, tCO2e: 0 },
   ];
 
   const ranking = [
@@ -140,7 +140,7 @@ function App() {
   const data3 = Array.isArray(dashboard.scope3)
     ? dashboard.scope3.map((scope, index) => ({
         id: index + 1,
-        value: parseInt(scope.tCO2e).toLocaleString(),
+        value: parseInt(scope.tCO2e).toFixed(),
         label: scope.head_name,
         color: color[index % 5],
       }))

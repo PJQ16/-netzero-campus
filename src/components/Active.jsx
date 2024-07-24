@@ -36,7 +36,7 @@ function Active() {
                 <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-6-tablet">
                   <div className="mdc-card info-card info-card--danger">
                     <div className="card-inner">
-                    <h5 className="card-title" style={{color: 'orangered', fontWeight: '800', fontSize: '18px'}}>จำนวนที่รายงาน</h5>
+                    <h5 className="card-title" style={{color: 'orangered', fontWeight: '800', fontSize: '24px'}}>จำนวนที่รายงาน</h5>
                     {dashboard.report.length > 0 ? (
                                     dashboard.report.map((rp, index) => (
                     <h5 className="font-weight-light pb-2 mb-1 border-bottom" key={index} style={{fontSize: '30px', fontWeight: '500'}}>{rp.report}</h5>
@@ -55,7 +55,7 @@ function Active() {
               <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop mdc-layout-grid__cell--span-6-tablet">
                 <div className="mdc-card info-card info-card--info">
                   <div className="card-inner">
-                    <h5 className="card-title" style={{color: 'rgb(0, 204, 204)', fontWeight: '800', fontSize: '13px'}}>การปล่อยก๊าซเรือนกระจกสะสม</h5>
+                    <h5 className="card-title" style={{color: 'rgb(0, 204, 204)', fontWeight: '800', fontSize: '24px'}}>การปล่อยก๊าซเรือนกระจกสะสม</h5>
                     {dashboard.total.length > 0 ? (
                                     dashboard.total.map((ghg, index) => (
                     <h5 className="font-weight-light pb-2 mb-1 border-bottom"  key={index}  style={{fontSize: '30px', fontWeight: '500'}}>{parseInt(ghg.tCO2e).toLocaleString()}</h5>
@@ -63,7 +63,7 @@ function Active() {
                     ) : (
                       <p>Loading....</p>
                     )}
-                    <p className="tx-12 text-muted">รวมจำนวน TCO<sub>2</sub>e</p>
+                    <p className="tx-12 text-muted">รวมจำนวน tCO<sub>2</sub>e</p>
                       <div className="card-icon-wrapper">
                         <i className="fa fa-leaf mdc-drawer-item-icon"></i>
                       </div>
@@ -74,7 +74,7 @@ function Active() {
               <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-9">
                <div className="mdc-card">
                   <div className="d-flex justify-content-between align-items-center">
-                    <h6 className="card-title mb-2 mb-sm-0">การปล่อยก๊าซเรือนกระจกและดูดกลับ {selectedYear +543}</h6>
+                    <h6 className="card-title mb-2 mb-sm-0">การปล่อยและการดูดกลับก๊าซเรือนกระจก ปี {selectedYear +543}</h6>
                   </div>
                   <div className="d-block d-sm-flex justify-content-between align-items-center">
                     <div className="mdc-tab-wrapper revenue-tab mdc-tab--secondary"> 
@@ -107,6 +107,7 @@ function Active() {
                                       />
                                     ),
                                     title: item.num,
+                                    subTitle:item.title,
                                     body: `${parseInt(
                                       item.tCO2e
                                     ).toLocaleString()} tCO2e`,
@@ -172,11 +173,10 @@ function Active() {
                     </div>
                   </div>
                 </div>
-                <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3">
+                <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6">
                <div className="mdc-card">
-                  <div className="d-flex justify-content-between align-items-center">
                     <h6 className="card-title mb-2 mb-sm-0 text-center"> Scope 1</h6>
-                  </div>
+                    <small className='text-center'>การปล่อยก๊าซเรือนกระจกทางตรง</small>
                   <div className="d-block d-sm-flex justify-content-between align-items-center">
                     <div className="mdc-tab-wrapper revenue-tab mdc-tab--secondary"> 
                       <div className="mdc-tab-bar" role="tablist">
@@ -194,7 +194,7 @@ function Active() {
                     <div
                       style={{
                         display: "flex",
-                        justifyContent: "center",
+                        justifyContent: "left",
                         alignItems: "center",
                       }}
                     >
@@ -202,11 +202,11 @@ function Active() {
                         <PieChart
                           series={[
                             {
-                              innerRadius: 40,
-                              outerRadius: 100,
+                              innerRadius: 80,
+                              outerRadius: 160,
                               cx: 150,
-                              cy: 100,
-                              data: data1,
+                              cy: 160,
+                              data: data1 ,
                               highlightScope: {
                                 faded: "global",
                                 highlighted: "item",
@@ -222,6 +222,7 @@ function Active() {
                                   100
                                 ).toFixed(0)}%`,
                             },
+                            
                           ]}
                           width={300}
                           height={600}
@@ -232,7 +233,7 @@ function Active() {
                                 vertical: "bottom",
                                 horizontal: "left",
                               },
-                              padding: 10,
+                              padding:{ top: 320, bottom: 0, left: -200, right:100}
                             },
                           }}
                         />
@@ -246,12 +247,11 @@ function Active() {
 
 
 
-              <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3">
+              <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6">
                <div className="mdc-card">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <h6 className="card-title mb-2 mb-sm-0">Scope 2</h6>
-                  </div>
-                  <div className="d-block d-sm-flex justify-content-between align-items-center">
+                    <h6 className="card-title text-center">Scope 2</h6>
+                    <small className='text-center'>การปล่อยก๊าซเรือนกระจกทางอ้อม</small>
+                  <div className="d-block d-sm-flex justify-content-start">
                     <div className="mdc-tab-wrapper revenue-tab mdc-tab--secondary"> 
                       <div className="mdc-tab-bar" role="tablist">
                         <div className="mdc-tab-scroller">
@@ -276,10 +276,10 @@ function Active() {
                         <PieChart
                           series={[
                             {
-                              innerRadius: 40,
-                              outerRadius: 100,
+                              innerRadius: 80,
+                              outerRadius: 160,
                               cx: 150,
-                              cy: 100,
+                              cy: 160,
                               data: data2,
                               highlightScope: {
                                 faded: "global",
@@ -298,7 +298,7 @@ function Active() {
                             },
                           ]}
                           width={300}
-                          height={600}
+                          height={350}
                           slotProps={{
                             legend: {
                               direction: "column",
@@ -306,7 +306,7 @@ function Active() {
                                 vertical: "bottom",
                                 horizontal: "left",
                               },
-                              padding: 10,
+                              padding:{ top: 320, bottom: 0, left: -200, right:100}
                             },
                           }}
                         />
@@ -320,11 +320,10 @@ function Active() {
 
 
 
-              <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3">
+              <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6">
                <div className="mdc-card">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <h6 className="card-title mb-2 mb-sm-0">Scope 3</h6>
-                  </div>
+                    <h6 className="card-title mb-2 mb-sm-0 text-center">Scope 3</h6>
+                    <small className='text-center'>การปล่อยก๊าซเรือนกระจกทางอ้อม</small>
                   <div className="d-block d-sm-flex justify-content-between align-items-center">
                     <div className="mdc-tab-wrapper revenue-tab mdc-tab--secondary"> 
                       <div className="mdc-tab-bar" role="tablist">
@@ -350,10 +349,10 @@ function Active() {
                         <PieChart
                           series={[
                             {
-                              innerRadius: 40,
-                              outerRadius: 100,
+                              innerRadius: 80,
+                              outerRadius: 160,
                               cx: 150,
-                              cy: 100,
+                              cy: 160,
                               data: data3,
                               highlightScope: {
                                 faded: "global",
@@ -380,7 +379,7 @@ function Active() {
                                 vertical: "bottom",
                                 horizontal: "left",
                               },
-                              padding: 10,
+                              padding:{ top: 320, bottom: 0, left: -200, right:100}
                             },
                           }}
                         />
@@ -394,11 +393,11 @@ function Active() {
 
 
 
-              <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3">
+              <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6">
                <div className="mdc-card">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <h6 className="card-title mb-2 mb-sm-0">Scope Ratio</h6>
-                  </div>
+          
+                    <h6 className="card-title mb-2 mb-sm-0 text-center">Scope Ratio</h6>
+                    <small className='text-center'>สัดส่วนของประเภทการปล่อยก๊าซเรือนกระจก</small>
                   <div className="d-block d-sm-flex justify-content-between align-items-center">
                     <div className="mdc-tab-wrapper revenue-tab mdc-tab--secondary"> 
                       <div className="mdc-tab-bar" role="tablist">
@@ -424,10 +423,10 @@ function Active() {
                         <PieChart
                           series={[
                             {
-                              innerRadius: 40,
-                              outerRadius: 100,
+                              innerRadius: 80,
+                              outerRadius: 160,
                               cx: 150,
-                              cy: 100,
+                              cy: 160,
                               data: dataRatio,
                               highlightScope: {
                                 faded: "global",
@@ -446,7 +445,7 @@ function Active() {
                             },
                           ]}
                           width={300}
-                          height={600}
+                          height={500}
                           slotProps={{
                             legend: {
                               direction: "column",
@@ -454,7 +453,7 @@ function Active() {
                                 vertical: "bottom",
                                 horizontal: "left",
                               },
-                              padding: 10,
+                              padding:{ top: 320, bottom: 0, left: -200, right:100}
                             },
                           }}
                         />

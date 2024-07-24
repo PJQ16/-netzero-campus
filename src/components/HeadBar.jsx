@@ -36,27 +36,6 @@ const {userData} = useContext(UserContext);
             </div>
             <div className="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
               <div className="menu-button-container menu-profile d-none d-md-block">
-                <button className="mdc-button mdc-menu-button">
-                  <span className="d-flex align-items-center">
-                  {userData.firstname !== '' ? (
-                    <>
-                     <span className="figure">
-                         <img src={`${config.urlApi}/logos/${userData.logo}`}  className="user" />
-                       </span>
-                       <span className="user-name">
-                         {userData.firstname}
-                       </span>
-                    </>
-                        
-                      ) : (
-                        <>
-                         
-                        </>
-)}
-
-                      </span>
-                </button>
-
                
                   <div className="mdc-menu mdc-menu-surface" tabIndex="-1">
                     <ul className="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">

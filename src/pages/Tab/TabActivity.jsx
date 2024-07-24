@@ -54,14 +54,14 @@ function TabActivity({
 }
         <div className="d-flex justify-content-end">
           <div className="align-items-end">
-            <button
+            {/* <button
               className="btn btn-secondary ms-2"
               data-bs-toggle="offcanvas"
               data-bs-target="#separateCalculate"
               aria-controls="separateCalculate"
             >
               <CurrencyExchangeIcon /> คำนวณแปลงค่า บาท/หน่วย
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
@@ -273,7 +273,7 @@ function TabActivity({
                           </button>
                         </Tooltip>
 
-                            <SourcesFile />
+                           {/*  <SourcesFile /> */}
                       </div>
                     </Accordion>
                   </div>

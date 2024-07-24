@@ -52,14 +52,14 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
         <div className="col-md-5 m-3">
           <div className="card shadow border-0">
             <div className="card-body">
-              <div style={{ height: '600px' }}> {/* กำหนด height สำหรับคอนเทนเนอร์ */}
+              <div style={{ height: '800px' }}> {/* กำหนด height สำหรับคอนเทนเนอร์ */}
                 <StyledPieChart
                   margin={{ top: 50, bottom: 50, left: 50, right: 50 }}
                   slotProps={{
                     legend: {
                       direction: 'column',
                       position: { vertical: 'bottom', horizontal: 'left' },
-                      padding: 0,
+                      padding:{ top: 120, bottom: 0, left: 0, right:100}
                     },
                   }}
                   series={[
@@ -93,7 +93,7 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
             </div>
           </div>
         </div>
-        <div className="col-md-5 m-3">
+        <div className="col-md-6 m-3">
           <div className="card border-0 shadow">
             <div className="card-body">
               <div className="table-responsive">
@@ -110,7 +110,7 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
                     {scopeData.map((item, index) => (
                       <tr className="text-center" key={index}>
                         <td className="text-start">{item.name}</td>
-                        <td>{parseFloat(item.tco2e).toFixed(2)}</td>
+                        <td>{parseFloat(item.tco2e).toLocaleString('en-US', {minimumFractionDigits: 2 })}</td>
                         <td>
                           {item.name === 'scope1' || item.name === 'scope2'
                             ? (
@@ -132,19 +132,19 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
                       <td>
                         {scopeData
                           .reduce((acc, item) => {
-                            if (item.name !== 'scope3') {
+                            if (item.name === 'ขอบเขตที่ 1: การปล่อยและดูดกลับก๊าซเรือนกระจกทางตรง' || item.name === 'ขอบเขตที่ 2: การปล่อยก๊าซเรือนกระจกทางอ้อม') {
                               return acc + parseFloat(item.tco2e);
                             }
                             return acc;
                           }, 0)
-                          .toFixed(2)}
+                          .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </td>
                       <td>100</td>
                       <td>-</td>
                     </tr>
                     <tr className="text-center">
                       <td className="text-start">ผลรวม Scope 1 & 2 & 3</td>
-                      <td>{scopeData.reduce((acc, item) => acc + parseFloat(item.tco2e), 0).toFixed(2)}</td>
+                      <td>{scopeData.reduce((acc, item) => acc + parseFloat(item.tco2e), 0) .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                       <td>-</td>
                       <td>100</td>
                     </tr>

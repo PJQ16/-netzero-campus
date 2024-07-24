@@ -32,7 +32,8 @@ export default function TemplateReport() {
     }, [fetchDataReport]);
 
     const calculateTotal = (scope) => {
-        return scope.reduce((acc, item) => acc + parseFloat(item.tCO2e), 0).toFixed(2);
+        const total = scope.reduce((acc, item) => acc + parseFloat(item.tCO2e), 0);
+        return total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     };
 
     const renderTable = (data, title) => (
@@ -49,7 +50,7 @@ export default function TemplateReport() {
                     {data.map((item, index) => (
                         <tr key={index}>
                             <td className='text-start'>{index + 1}. {item.head_name}</td>
-                            <td className='text-center'>{parseFloat(item.tCO2e).toFixed(2)}</td>
+                            <td className='text-center'>{parseFloat(item.tCO2e).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -57,7 +58,7 @@ export default function TemplateReport() {
                     <tr>
                         <th className='text-center'>รวม</th>
                         <th className='text-center'>
-                            {data.reduce((acc, item) => acc + parseFloat(item.tCO2e), 0).toFixed(2)}
+                            {data.reduce((acc, item) => acc + parseFloat(item.tCO2e), 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </th>
                     </tr>
                 </tfoot>

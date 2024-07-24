@@ -12,7 +12,6 @@ const CalendaActive = () => {
 
   const handleSelect = (year) => {
     setSelectedYear(year);
-    toast.info(`แสดงข้อมูลปี ${year + 543}`,{autoClose:400});
   };
 
   const uniqueYears = [...new Set(listYear.map(item => item.years))];
