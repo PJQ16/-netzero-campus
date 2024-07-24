@@ -158,9 +158,21 @@ function ActiveDashboard() {
   const totalScope3 = sumValues(dashboard.scope3);
 
   const dataRatio = [
-    { label: "Scope 1", value: totalScope1, color: color[0] },
-    { label: "Scope 2", value: totalScope2, color: color[1] },
-    { label: "Scope 3", value: totalScope3, color: color[2] },
+    {
+      label: "Scope 1 การปล่อยก๊าซเรือนกระจกทางตรง",
+      value: totalScope1,
+      color: color[0], // เปลี่ยนสีตามต้องการ
+    },
+    {
+      label: "Scope 2 การปล่อยก๊าซเรือนกระจกทางอ้อม (ไฟฟ้า)",
+      value: totalScope2,
+      color: color[1], // เปลี่ยนสีตามต้องการ
+    },
+    {
+      label: "Scope 3 การปล่อยก๊าซเรือนกระจกทางอ้อม อื่นๆ",
+      value: totalScope3,
+      color: color[2], // เปลี่ยนสีตามต้องการ
+    },
   ];
 
   const handleModal = (rankId, index) => {

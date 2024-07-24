@@ -225,7 +225,7 @@ function Active() {
                             
                           ]}
                           width={300}
-                          height={600}
+                          height={700}
                           slotProps={{
                             legend: {
                               direction: "column",
@@ -233,7 +233,7 @@ function Active() {
                                 vertical: "bottom",
                                 horizontal: "left",
                               },
-                              padding:{ top: 320, bottom: 0, left: -200, right:100}
+                              padding:{ top: 320, bottom: 0, left: -50, right:100}
                             },
                           }}
                         />
@@ -298,7 +298,7 @@ function Active() {
                             },
                           ]}
                           width={300}
-                          height={350}
+                          height={450}
                           slotProps={{
                             legend: {
                               direction: "column",
@@ -306,7 +306,7 @@ function Active() {
                                 vertical: "bottom",
                                 horizontal: "left",
                               },
-                              padding:{ top: 320, bottom: 0, left: -200, right:100}
+                              padding:{ top: 320, bottom: 0, left: -50, right:100}
                             },
                           }}
                         />
@@ -379,7 +379,7 @@ function Active() {
                                 vertical: "bottom",
                                 horizontal: "left",
                               },
-                              padding:{ top: 320, bottom: 0, left: -200, right:100}
+                              padding:{ top: 320, bottom: 0, left: -50, right:100}
                             },
                           }}
                         />
@@ -453,7 +453,7 @@ function Active() {
                                 vertical: "bottom",
                                 horizontal: "left",
                               },
-                              padding:{ top: 320, bottom: 0, left: -200, right:100}
+                              padding:{ top: 320, bottom: 0, left: -50, right:100}
                             },
                           }}
                         />

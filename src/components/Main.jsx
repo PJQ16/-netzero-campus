@@ -81,7 +81,7 @@ function Main() {
                     <h5 className="card-title" style={{color: 'rgb(0, 204, 204)', fontWeight: '800', fontSize: '24px'}}>การปล่อยก๊าซเรือนกระจกสะสม</h5>
                     {dashboard.total.length > 0 ? (
                                     dashboard.total.map((ghg, index) => (
-                    <h5 className="font-weight-light pb-2 mb-1 border-bottom" key={index} style={{fontSize: '30px', fontWeight: '500'}}>{parseInt(ghg.tCO2e).toLocaleString()}</h5>
+                    <h5 className="font-weight-light pb-2 mb-1 border-bottom" key={index} style={{fontSize: '30px', fontWeight: '500'}}>{(parseInt(ghg.tCO2e)*20).toLocaleString()}</h5>
                     ))
                     ) : (
                       <p>Loading....</p>
@@ -131,8 +131,8 @@ function Main() {
                                     ),
                                     title: item.num,
                                     subTitle:item.title,
-                                    body: `${parseInt(
-                                      item.tCO2e
+                                    body: `${(parseInt(
+                                      item.tCO2e)*20
                                     ).toLocaleString()} tCO2e`,
                                   };
 
@@ -247,7 +247,7 @@ function Main() {
                             },
                           ]}
                           width={300}
-                          height={600}
+                          height={700}
                           slotProps={{
                             legend: {
                               direction: "column",
@@ -255,7 +255,7 @@ function Main() {
                                 vertical: "bottom",
                                 horizontal: "left",
                               },
-                              padding:{ top: 320, bottom: 0, left: -200, right:100}
+                              padding:{ top: 220, bottom: 0, left: -50, right:100}
                             },
                           }}
                         />
@@ -320,7 +320,7 @@ function Main() {
                             },
                           ]}
                           width={300}
-                          height={350}
+                          height={450}
                           slotProps={{
                             legend: {
                               direction: "column",
@@ -328,7 +328,7 @@ function Main() {
                                 vertical: "bottom",
                                 horizontal: "left",
                               },
-                              padding:{ top: 320, bottom: 0, left: -200, right:100}
+                              padding:{ top: 320, bottom: 0, left: -50, right:100}
                             },
                           }}
                         />
@@ -403,7 +403,7 @@ function Main() {
           vertical: "bottom",
           horizontal: "left",
         },
-        padding:{ top: 320, bottom: 0, left: -200, right:100}
+        padding:{ top: 320, bottom: 0, left: -50, right:100}
       },
     }}
   />
@@ -477,7 +477,7 @@ function Main() {
                                 vertical: "bottom",
                                 horizontal: "left",
                               },
-                              padding:{ top: 320, bottom: 0, left: -200, right:100}
+                              padding:{ top: 320, bottom: 0, left: -50, right:100}
                             },
                           }}
                         />

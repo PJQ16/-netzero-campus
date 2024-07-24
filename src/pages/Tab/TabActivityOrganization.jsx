@@ -68,8 +68,8 @@ function TabActivityOrganization() {
     try {
       const res = await Swal.fire({
         icon: 'question',
-        title: 'เพิ่มรูป',
-        text: 'คุณต้องการเพิ่มรูปไหมครับ',
+        title: 'Confirm',
+        text: 'คุณต้องการบันทึกรูป ใช่หรือไม่?',
         showCancelButton: true
       });
 

@@ -122,7 +122,7 @@ function App() {
   const data1 = Array.isArray(dashboard.scope1)
     ? dashboard.scope1.map((scope, index) => ({
         id: index + 1,
-        value: parseFloat(scope.tCO2e).toFixed(0),
+        value: (parseFloat(scope.tCO2e)*20).toFixed(0),
         label: scope.head_name,
         color: color[index % 5],
       }))
@@ -131,7 +131,7 @@ function App() {
   const data2 = Array.isArray(dashboard.scope2)
     ? dashboard.scope2.map((scope, index) => ({
         id: index + 1,
-        value: parseFloat(scope.tCO2e).toFixed(0),
+        value: (parseFloat(scope.tCO2e)*20).toFixed(0),
         label: scope.head_name,
         color: color[4],
       }))
@@ -140,7 +140,7 @@ function App() {
   const data3 = Array.isArray(dashboard.scope3)
     ? dashboard.scope3.map((scope, index) => ({
         id: index + 1,
-        value: parseInt(scope.tCO2e).toFixed(),
+        value: (parseInt(scope.tCO2e)*20).toFixed(),
         label: scope.head_name,
         color: color[index % 5],
       }))
@@ -161,17 +161,17 @@ function App() {
   // สร้าง dataRatio
   const dataRatio = [
     {
-      label: "Scope 1",
+      label: "Scope 1 การปล่อยก๊าซเรือนกระจกทางตรง",
       value: totalScope1,
       color: color[0], // เปลี่ยนสีตามต้องการ
     },
     {
-      label: "Scope 2",
+      label: "Scope 2 การปล่อยก๊าซเรือนกระจกทางอ้อม (ไฟฟ้า)",
       value: totalScope2,
       color: color[1], // เปลี่ยนสีตามต้องการ
     },
     {
-      label: "Scope 3",
+      label: "Scope 3 การปล่อยก๊าซเรือนกระจกทางอ้อม อื่นๆ",
       value: totalScope3,
       color: color[2], // เปลี่ยนสีตามต้องการ
     },

@@ -69,8 +69,8 @@ function TabActivityLocation() {
     try {
       const res = await Swal.fire({
         icon: 'question',
-        title: 'เพิ่มรูป',
-        text: 'คุณต้องการเพิ่มรูปไหมครับ',
+        title: 'Confirm',
+        text: 'คุณต้องการบันทึกรูป ใช่หรือไม่?',
         showCancelButton: true
       });
 
@@ -104,7 +104,7 @@ function TabActivityLocation() {
 return (
   <div>
     <div className="row mb-3">
-      <p className='h2 text-center mt-2'>ภาพโพรไฟล์ (Profile) ขององค์กร</p>
+      <p className='h2 text-center mt-2'>ภาพโปรไฟล์ (Profile) ขององค์กร</p>
        <div className="col-md-12 d-flex justify-content-center">
         {showImages.length > 0 ? (
           showImages.map((image) => (
@@ -124,7 +124,7 @@ return (
           ))
         ) : (
           <div className="card">
-             <center className='fw-bold mt-3'>กรุณาอัพโหลดไฟล์ภาพโพรไฟล์ขององค์กร</center>
+             <center className='fw-bold mt-3'>กรุณาอัพโหลดไฟล์ภาพโปรไฟล์ขององค์กร</center>
              <sub className='text- text-center mt-2'>(Upload รูปภาพองค์กร มีขนาดไม่เกิน 2 MB สูงสุด 5 ภาพ )</sub> 		
             <div className="card-body d-flex justify-content-center align-items-center flex-wrap">
               {imageLocations.map((image, index) => (

@@ -80,7 +80,7 @@ function TabActivityInfo({  student, setStudent, campusReport,setCampusReport, t
                             </td>
                            </tr>
                            <tr>
-                            <td className='text-start'>พื้นทั้งหมด (ตารางเมตร)</td>
+                            <td className='text-start'>พื้นทั้งหมด (ไร่)</td>
                             <td><input
                                     type="number"
                                     className="form-control"

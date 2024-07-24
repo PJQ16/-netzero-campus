@@ -55,6 +55,14 @@ function ActivityDetail() {
   const handlerSubmitUpdate = async (event, info) => {
     try {
       event.preventDefault();
+      if(employee === '' || area === '' || student === ''|| totalArea === ''){
+            return Swal.fire({
+              icon:'warning',
+              title:'กรุณากรอกข้อมมูลให้ครบถ้วน',
+              text:'ถ้าข้อมูลยังไม่มีให้ใส่เลข 0',
+              timer:1500
+            });
+      }else {
       const payload = {
         employee_amount: employee, 
         building_area: area,
@@ -75,6 +83,8 @@ function ActivityDetail() {
         await axios.put(config.urlApi + `/activity/modifyDataPeriod/${info.id}`, payload);
         fetchDataInfo();
       }
+    }
+
     } catch (err) {
       Swal.fire({
         icon: 'error',
