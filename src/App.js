@@ -91,7 +91,7 @@ function App() {
   };
 
   const test = [
-    { num: "TOTAL EMISSION",title:'การปล่อยก๊าซเรือนกระจกทั้หมด', color: "#a12A0A", icon: Co2Icon, tCO2e: 0 },
+    { num: "TOTAL EMISSION",title:'การปล่อยก๊าซเรือนกระจกทั้งหมด', color: "#a12A0A", icon: Co2Icon, tCO2e: 0 },
     { num: "GHG Removal",title:'การดูดกลับก๊าซเรือนกระจก', color: "#6B9A5B", icon: SpaIcon, tCO2e: 0 },
     { num: "Scope 1",title:'การปล่อยก๊าซเรือนกระจกทางตรง', color: "#1C87D7", icon: LocalGasStationIcon, tCO2e: 0 },
     { num: "Scope 2",title:'การปล่อยก๊าซเรือนกระจกทางอ้อม', color: "#2752D1", icon: BoltIcon, tCO2e: 0 },
