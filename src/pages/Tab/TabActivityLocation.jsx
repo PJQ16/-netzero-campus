@@ -130,7 +130,7 @@ return (
               {imageLocations.map((image, index) => (
                 <Tooltip title={'กดคลิกที่รูปกล้องถ่ายรูปและเลือกไฟล์เพื่อ upload '} placement="top" >
                 <div key={index} style={{ position: 'relative', marginRight: '10px', marginBottom: '10px' }}>
-                  
+                 
                   <img
                     src={image.src}
                     alt={`Image ${index + 1}`}

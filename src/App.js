@@ -148,7 +148,7 @@ function App() {
 
   const sumValues = (data) => {
     return data.reduce((acc, scope) => {
-      const value = parseInt(scope.tCO2e) || 0;
+      const value = (parseInt(scope.tCO2e)*20) || 0;
       return acc + value;
     }, 0);
   };
