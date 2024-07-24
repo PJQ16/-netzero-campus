@@ -53,42 +53,48 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
           <div className="card shadow border-0">
             <div className="card-body">
               <div style={{ height: '800px' }}> {/* กำหนด height สำหรับคอนเทนเนอร์ */}
-                <StyledPieChart
-                  margin={{ top: 50, bottom: 50, left: 50, right: 50 }}
-                  slotProps={{
-                    legend: {
-                      direction: 'column',
-                      position: { vertical: 'bottom', horizontal: 'left' },
-                      padding:{ top: 120, bottom: 0, left: 0, right:100}
-                    },
-                  }}
-                  series={[
-                    {
-                      data: scopeData.map((item) => ({
-                        id: item.id,
-                        value: parseFloat(item.tco2e),
-                        label: item.name,
-                        color: colors[item.name] || 'gray',
-                      })),
-                      arcLabel: (item) => {
-                        const percentage = percentages.find((p) => p.label === item.label)?.percentage;
-                        if (parseFloat(percentage) === 0) {
-                          return '';
-                        }
-                        return isNaN(parseFloat(percentage)) ? '' : `${percentage}%`;
-                      },
-                      highlightScope: { faded: 'global', highlighted: 'item' },
-                      faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-                      innerRadius: 100,
-                      outerRadius: 180,
-                      paddingAngle: 3,
-                      cornerRadius: 10,
-                      endAngle: 360,
-                    },
-                  ]}
-                >
-                  <PieCenterLabel>ผลการคำนวณ ปี {years}</PieCenterLabel>
-                </StyledPieChart>
+              <StyledPieChart
+  margin={{ top: 50, bottom: 50, left: 50, right: 50 }}
+  slotProps={{
+    legend: {
+      direction: 'column',
+      position: { vertical: 'bottom', horizontal: 'left' },
+      padding:{ top: 120, bottom: 0, left: 0, right: 100 }
+    },
+  }}
+  series={[
+    {
+      data: scopeData
+        .filter(item => 
+          item.name === 'ขอบเขตที่ 1: การปล่อยและดูดกลับก๊าซเรือนกระจกทางตรง' || 
+          item.name === 'ขอบเขตที่ 2: การปล่อยก๊าซเรือนกระจกทางอ้อม' || 
+          item.name === 'ขอบเขตที่ 3: การปล่อยก๊าซเรือนกระจกทางอ้อม'
+        )
+        .map(item => ({
+          id: item.id,
+          value: parseFloat(item.tco2e),
+          label: item.name,
+          color: colors[item.name] || 'gray',
+        })),
+      arcLabel: (item) => {
+        const percentage = percentages.find((p) => p.label === item.label)?.percentage;
+        if (parseFloat(percentage) === 0) {
+          return '';
+        }
+        return isNaN(parseFloat(percentage)) ? '' : `${percentage}%`;
+      },
+      highlightScope: { faded: 'global', highlighted: 'item' },
+      faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+      innerRadius: 100,
+      outerRadius: 180,
+      paddingAngle: 3,
+      cornerRadius: 10,
+      endAngle: 360,
+    },
+  ]}
+>
+  <PieCenterLabel>ผลการคำนวณ ปี {years}</PieCenterLabel>
+</StyledPieChart>
               </div>
             </div>
           </div>
