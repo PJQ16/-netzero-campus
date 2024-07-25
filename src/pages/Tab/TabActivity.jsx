@@ -98,7 +98,7 @@ function TabActivity({
                       headCategory.id === 39 ||
                      
                       headCategory.id === 43 ||
-                      headCategory.id === 56
+                      headCategory.id === 12
                       ? (
                         <button
                           className="btn btn-success mb-2"
@@ -168,9 +168,8 @@ function TabActivity({
                                             headCategory.id === 32 ||
                                             headCategory.id === 33 ||
                                             headCategory.id === 39 ||
-                                           
                                             headCategory.id === 43 ||
-                                            headCategory.id === 56
+                                            headCategory.id === 12
                                            ? (
                                             <form>
                                               <input

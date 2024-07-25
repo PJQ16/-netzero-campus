@@ -182,7 +182,7 @@ function SignUp() {
                     onChange={handleCampusChange}
                     required
                   >
-                    <option value="">เลือกวิทยาเขต</option>
+                    <option value="">เลือกสังกัดของท่าน</option>
                     {campuies.map((campus) => (
                       <option key={campus.id} value={campus.id}>
                         {campus.campus_name}
