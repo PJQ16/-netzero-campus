@@ -38,11 +38,16 @@ function TabActivity({
     (activity) => activity.headcategories.length > 0
   );
 
+  const chkStatus =  activities.some(
+    (activity) => activity.status_activity === '3'
+  );
   return (
     <div>
-      <p className="h2 mt-2">กิจกรรมการปล่อยก๊าซเรือนกระจก</p>
+      <p className="h2">กิจกรรมการปล่อยก๊าซเรือนกระจก</p>
       <div>
-      {!hasActivities ? (<></>):(
+      {chkStatus ? (<>
+      
+      </>):(
         <button
           className="btn btn-primary"
           data-bs-toggle="modal"
@@ -70,6 +75,7 @@ function TabActivity({
         <>
         
         <div className="d-flex flex-row justify-content-center" style={{ height: 'auto' }}>
+          
           <TransferList
           onSendData={handleSendData}
           headCategory={{ headCategory, setHeadCategory }}
@@ -87,30 +93,36 @@ function TabActivity({
                   <div className="accordion" id={`accordion${activity.name}`}>
                     <Accordion
                       id={`collapse${headCategory.id}`}
-                      title={`${headIndex + 1}.) ${headCategory.head_name} `}
+                      title={`${headIndex + 1}. ${headCategory.head_name} `}
                       expanded={headCategory.id === 0}
                     >
-                      {
-                      headCategory.id === 30 ||
-                      headCategory.id === 31 ||
-                      headCategory.id === 32 ||
-                      headCategory.id === 33 ||
-                      headCategory.id === 39 ||
-                     
-                      headCategory.id === 43 ||
-                      headCategory.id === 12
-                      ? (
-                        <button
-                          className="btn btn-success mb-2"
-                          onClick={handdlerFuel}
-                        >
-                          <CompareArrowsIcon /> ซิงค์ข้อมูล
-                        </button>
-                      ) : null}
+                                                {
+                            chkStatus ? (
+                              <></> // แสดงอะไรเลยถ้า chkStatus เป็น false
+                            ) : (
+                              headCategory.id === 30 ||
+                              headCategory.id === 31 ||
+                              headCategory.id === 32 ||
+                              headCategory.id === 33 ||
+                              headCategory.id === 39 ||
+                              headCategory.id === 43 ||
+                              headCategory.id === 12 ? (
+                                <button
+                                  className="btn btn-success mb-2"
+                                  onClick={handdlerFuel}
+                                >
+                                  <CompareArrowsIcon /> ซิงค์ข้อมูล
+                                </button>
+                              ) : null
+                            )
+                          }
                       <div className="d-flex flex-row justify-content-between">
                       <span className="fw-normal small-text">
                       {headCategory.head_title}
                       </span>
+                      {chkStatus ? (<>
+      
+                      </>):(
                         <Tooltip
                           placement="top"
                           title={`ลบรายชื่อกิจกรรม ${headCategory.head_name}`}
@@ -120,6 +132,8 @@ function TabActivity({
                             <RestoreFromTrashIcon />
                           </button>
                         </Tooltip>
+                      )
+                      }
                       </div>
                     
 
@@ -136,7 +150,11 @@ function TabActivity({
                               <th className="text-center">
                                 ปริมาณก๊าซเรือนกระจก (tCO<sub>2</sub>e/ต่อปี)
                               </th>
+                              {chkStatus ? (<>
+      
+                              </>):(
                               <th className="text-center">ลบข้อมูล</th>
+                               )}
                             </tr>
                           </thead>
                           <tbody>
@@ -172,6 +190,7 @@ function TabActivity({
                                             headCategory.id === 12
                                            ? (
                                             <form>
+                                              
                                               <input
                                                 type="number"
                                                 disabled
@@ -187,6 +206,33 @@ function TabActivity({
                                             </form>
                                           ) : (
                                             <form>
+                                               {chkStatus ? (<>
+                                                <input
+                                                disabled
+                                                type="number"
+                                                style={{
+                                                  borderRadius: "10px",
+                                                  border: "1px solid gray",
+                                                  width: "90px",
+                                                  padding: "5px",
+                                                }}
+                                                key={data_scope.id}
+                                                onFocus={(e) => {
+                                                  e.target.style.backgroundColor =
+                                                    "#DBF1C0";
+                                                }}
+                                                onChange={(e) =>
+                                                  handleQuantityChange(
+                                                    e,
+                                                    data_scope
+                                                  )
+                                                }
+                                                defaultValue={
+                                                  data_scope.quantity
+                                                }
+                                              />
+      
+                                              </>):(
                                               <input
                                                 type="number"
                                                 style={{
@@ -210,6 +256,7 @@ function TabActivity({
                                                   data_scope.quantity
                                                 }
                                               />
+                                              )}
                                             </form>
                                           )}
                                         </td>
@@ -237,7 +284,11 @@ function TabActivity({
                                                   1000
                                               ).toFixed(2)}
                                         </td>
-                                        <td className="text-center">
+                                      
+                                        {chkStatus ? (<>
+      
+                                        </>):(  
+                                            <td className="text-center">
                                         <Tooltip
                                             placement="top"
                                             title={`ลบรายชื่อกิจกรรม ${data_scope.name}`}
@@ -246,7 +297,9 @@ function TabActivity({
                                           <DeleteIcon sx={{fontSize:50}} />
                                           </button >
                                           </Tooltip>
-                                        </td>
+                                          </td>
+                                        )}
+                                       
                                       </tr>
                                     )}
                                   </React.Fragment>
@@ -256,6 +309,7 @@ function TabActivity({
                      
                           </tbody>
                         </table>
+                        {chkStatus ?(<></>):(
                         <Tooltip placement="bottom" title={`เพิ่มกิจกรรมอื่นๆ`}>
                                                 <button
                                                   className="btn my-1 mx-1 btn-success fw-bold"
@@ -271,6 +325,7 @@ function TabActivity({
                             + เพิ่มกิจกรรมอื่นๆ (กำหนดเอง)
                           </button>
                         </Tooltip>
+                        )}
 
                            {/*  <SourcesFile /> */}
                       </div>

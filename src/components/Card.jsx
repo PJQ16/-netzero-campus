@@ -13,7 +13,7 @@ export default function Card({ p,col, cols, color, icon, title, body,bgColor,sub
             <div className="card-body">
               <h5 className="card-title text-white">{title}</h5>
               <small className='text-white'>{subTitle}</small>
-              <p className="card-text text-white" dangerouslySetInnerHTML={{ __html: body }}></p>
+              <h5 className="card-title text-white" dangerouslySetInnerHTML={{ __html: body }}></h5>
             </div>
           </div>
         </div>

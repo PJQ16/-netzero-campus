@@ -138,7 +138,7 @@ function ActivityDetail() {
       <HeadBar />
       <div className="p-5">
          <div label="ข้อมูลทั่วไป">
-           <TabActivityInfo   student={student} setStudent={setStudent} campusReport={campusReport} setCampusReport={setCampusReport} totalArea={totalArea} setTotalArea={setTotalArea} handlerSubmitUpdate={handlerSubmitUpdate} infos={infos} latitude={latitude} setLatitude={setLatitude} longitude={longitude} setLongitude={setLongitude} setEmployee={setEmployee} setArea={setArea}/>
+           <TabActivityInfo userData={userData}   student={student} setStudent={setStudent} campusReport={campusReport} setCampusReport={setCampusReport} totalArea={totalArea} setTotalArea={setTotalArea} handlerSubmitUpdate={handlerSubmitUpdate} infos={infos} latitude={latitude} setLatitude={setLatitude} longitude={longitude} setLongitude={setLongitude} setEmployee={setEmployee} setArea={setArea}/>
            <div className="d-flex flex-row justify-content-between">
            <Link to={`/activitydata`} className="btn btn-outline-primary me-3"><KeyboardDoubleArrowLeftIcon/> ย้อนกลับ </Link>
          

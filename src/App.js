@@ -1,16 +1,12 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
-import ActivityData from './pages/ActivityData';
 import ActivityDetail from './pages/ActivityDetail';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { UserDataProvider } from './components/MyContext'; 
 import NotFound from './pages/NotFound';
 import './index.css';
-import Index from './pages/index';
-import ForgotPassword from './pages/ForgotPassword';
-import Dashboard from './pages/Dashboard';
 import NewDashBoard from './pages/NewDashBoard';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -30,6 +26,11 @@ import CreateGHG from './pages/CreateGHG';
 import Summary from './pages/Sumary';
 import Report from './pages/Report';
 import ActiveDashboard from './pages/ActiveDashboard';
+import ResetPassword from './pages/ResetPassword';
+import CheckYourEmail from './pages/CheckEmail';
+import ForgotPasswordForm from './pages/ForgotPassword';
+import VerifyEmail from './pages/VerifyEmail';
+import Reference from './pages/Reference';
 
 export const YearContext = createContext();
 function App() {
@@ -57,6 +58,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [groupedData, setGroupedData] = useState([]);
+  const [approve,setApprove] = useState([]);
 
   const fetchDataApi = async (year) => {
     try {
@@ -90,12 +92,13 @@ function App() {
     }
   };
 
+  
   const test = [
     { num: "TOTAL EMISSION",title:'การปล่อยก๊าซเรือนกระจกทั้งหมด', color: "#a12A0A", icon: Co2Icon, tCO2e: 0 },
     { num: "GHG Removal",title:'การดูดกลับก๊าซเรือนกระจก', color: "#6B9A5B", icon: SpaIcon, tCO2e: 0 },
     { num: "Scope 1",title:'การปล่อยก๊าซเรือนกระจกทางตรง', color: "#1C87D7", icon: LocalGasStationIcon, tCO2e: 0 },
     { num: "Scope 2",title:'การปล่อยก๊าซเรือนกระจกทางอ้อม', color: "#2752D1", icon: BoltIcon, tCO2e: 0 },
-    { num: "Scope 3",title:'การปล่อยก๊าซเรือนกระจกทางอ้อม', color: "#754ABF", icon: FlightLandIcon, tCO2e: 0 },
+    { num: "Scope 3",title:'การปล่อยก๊าซเรือนกระจกทางอ้อม', color: "#183482", icon: FlightLandIcon, tCO2e: 0 },
   ];
 
   const ranking = [
@@ -115,23 +118,39 @@ function App() {
       eg: "GHG Removal",
       bg: "success",
     },
+    {
+      eg: "Scope 1",
+      bg: "warning",
+    },
+    {
+      eg: "Scope 2",
+      bg: "primary",
+    },
+    {
+      eg: "Scope 3",
+      bg: "info",
+    },
+    {
+      eg: "GHG Removal",
+      bg: "success",
+    },
   ];
 
-  const color = ["#C8DEB9", "#A6CEAA", "#6BAB90", "#55917F", "#5A6F6D"];
+  const color = ["#0D6056", "#0C7E67", "#108C82", "#0BB2A0", "#0DB09B","#70C9B7","#4BAAC6","#6EB8DD","#499DCB","#3C9DCA","#339CDD","#0084CE","#0F5A7C"];
 
   const data1 = Array.isArray(dashboard.scope1)
     ? dashboard.scope1.map((scope, index) => ({
         id: index + 1,
-        value: (parseFloat(scope.tCO2e)*20).toFixed(0),
+        value: (parseFloat(scope.tCO2e)).toFixed(0),
         label: scope.head_name,
-        color: color[index % 5],
+        color: color[index ],
       }))
     : [];
 
   const data2 = Array.isArray(dashboard.scope2)
     ? dashboard.scope2.map((scope, index) => ({
         id: index + 1,
-        value: (parseFloat(scope.tCO2e)*20).toFixed(0),
+        value: (parseFloat(scope.tCO2e)).toFixed(0),
         label: scope.head_name,
         color: color[4],
       }))
@@ -140,15 +159,15 @@ function App() {
   const data3 = Array.isArray(dashboard.scope3)
     ? dashboard.scope3.map((scope, index) => ({
         id: index + 1,
-        value: (parseInt(scope.tCO2e)*20).toFixed(),
+        value: (parseInt(scope.tCO2e)).toFixed(),
         label: scope.head_name,
-        color: color[index % 5],
+        color: color[index ],
       }))
     : [];
 
   const sumValues = (data) => {
     return data.reduce((acc, scope) => {
-      const value = (parseInt(scope.tCO2e)*20) || 0;
+      const value = (parseInt(scope.tCO2e)) || 0;
       return acc + value;
     }, 0);
   };
@@ -181,9 +200,6 @@ function App() {
     setModalContent({
       title: `อันดับ ${index + 1}`,
       body: `${rankId.eg}`,
-    });
-    toast.info("แสดงข้อมูลสำเร็จ", {
-      autoClose: 600,
     });
   };
 
@@ -250,6 +266,21 @@ function App() {
     (acc, item) => acc + parseInt(item.value),
     0
   );
+
+  useEffect(()=>{
+    approvedReport();
+  },[selectedYear]);
+
+  const approvedReport = async() =>{
+    try{
+      const respon =  await axios(config.urlApi + `/amountReport`);
+      setApprove(respon.data.result);
+     fetchDataApi();
+
+    }catch(e){
+      console.log(e.mssage);
+    }
+  }
 
   return (
     <>
@@ -318,19 +349,19 @@ function App() {
           setSearchTerm,
           selectedYear,
           setSelectedYear,
+          approve
         }}
       >
         <UserDataProvider> 
           <Routes>
-         {/*    <Route path='/login' element={<Login/>} /> */}
            {/*  <Route path='/' element={<Index />} /> */}
             <Route path='/login' element={<SignIn />} />
             <Route path='/about' element={<Home />} />
             <Route path='/' element={<NewDashBoard />} />
-            <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/signUp' element={<SignUp  />} />
             <Route path='/activitydata' element={<Demo  />} />
             <Route path='/dashboard' element={<ActiveDashboard  />} />
+            <Route path='/reference' element={<Reference />} />
           {/*   <Route path='/activitydata' element={<ActivityData  />} /> */}
             <Route path='/activityDetail/:campus_id/:fac_id/:years/:id' element={<ActivityDetail/>} />
             <Route path='/activityProfile/:campus_id/:fac_id/:years/:id' element={<Profile/>} />
@@ -338,6 +369,12 @@ function App() {
             <Route path='/activityCreateGHG/:campus_id/:fac_id/:years/:id' element={<CreateGHG/>} />
             <Route path='/activitySummary/:campus_id/:fac_id/:years/:id' element={<Summary/>} />
             <Route path='/activityReport/:campus_id/:fac_id/:years/:id' element={<Report/>} />
+
+            <Route path="/reset-password" element={<ResetPassword/>} />
+            <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route path="/check-your-email" element={<CheckYourEmail />} />
+            <Route path="/verify/:token" element={<VerifyEmail />} />
           {/*   <Route path='/' element={<Dashboard/>} /> */}
             <Route path='*' element={<NotFound />} />
           </Routes>

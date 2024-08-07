@@ -35,7 +35,7 @@ function TabActivityInfo({  student, setStudent, campusReport,setCampusReport, t
                           <table className="table table-bordered table-striped">
                             <thead>
                               <tr>
-                              <th className='text-start' colSpan={2}>กรุณากรอกข้อมูลทั่วไปของหน่วยงาน</th>
+                              <th className='text-start fw-bold' style={{backgroundColor:'#CFE2FF',fontSize:'18px'}} colSpan={2}>กรุณากรอกข้อมูลทั่วไปของหน่วยงาน</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -118,15 +118,6 @@ function TabActivityInfo({  student, setStudent, campusReport,setCampusReport, t
                                   /></td>
                            </tr>
                            <tr>
-                            <td className='text-start'>รูปแบบการคำนวณ</td>
-                            <td><input
-                                    type="text"
-                                    className="form-control"
-                                    value='องค์การบริหารจัดการก๊าซเรือนกระจก (องค์การมหาชน)'
-                                    disabled
-                                  /></td>
-                           </tr>
-                           <tr>
                             <td className='text-start'>ปีฐาน</td>
                             <td> <input
                                     type="number"
@@ -138,14 +129,20 @@ function TabActivityInfo({  student, setStudent, campusReport,setCampusReport, t
 
                             </tbody>
                           </table>
+                          {info.status_activity === "3" ?
+                          <>
+                          </>
+                          :
                           <button 
-                                  className="btn" 
+                                  className="btn btn-primary" 
                                   type="button" 
                                   onClick={(event) => handlerSubmitUpdate(event,info)} 
-                                  style={{ backgroundColor: '#A969FE', color: '#ffffff' }}
+                                  style={{ color: '#ffffff' }}
                                 >
                                   บันทึกข้อมูล
                                 </button>
+                          }
+                          
                                 </form>
                           
                         </div>

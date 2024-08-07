@@ -105,15 +105,15 @@ function Demo() {
     const getStatusDetails = (status) => {
         switch (status) {
           case '0':
-            return { text: 'ยังไม่มีการดำเนินการ', color: 'gray' };
+            return { text: 'ยังไม่มีการดำเนินการ', color: '#52524F' };
           case '1':
-            return { text: 'กำลังดำเนินการ', color: 'lightcyan' }; // สีฟ้าอ่อนๆ
+            return { text: 'กำลังดำเนินการ', color: '#B5BC49' }; // สีฟ้าอ่อนๆ
           case '2':
-            return { text: 'รอตรวจสอบ', color: 'blue' };
+            return { text: 'รอตรวจสอบ', color: '#122FC2' };
           case '3':
-            return { text: 'ตรวจสอบเรียบร้อย', color: '#90EE90' }; // สีเขียวอ่อน
+            return { text: 'ตรวจสอบเรียบร้อย', color: '#447A4A'}; // สีเขียวอ่อน
           case '4':
-            return { text: 'เกิดข้อผิดพลาด', color: 'red' };
+            return { text: 'เกิดข้อผิดพลาด', color: '#E1051D' };
           default:
             return { text: 'ไม่ทราบสถานะ', color: 'black' };
         }
@@ -182,11 +182,11 @@ function Demo() {
               <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12-desktop mdc-layout-grid__cell--span-12-tablet">
                 <div className="mdc-card info-card info-card--light">
                   <div className="card-inner">
-                    <h5 className="card-title" style={{color: 'rgb(0, 204, 204)', fontWeight: '800', fontSize: '13px'}}>ชื่อมหาวิทยาลัย</h5>
+                    <h5 className="card-title" style={{fontSize: '24px'}}>ชื่อมหาวิทยาลัย</h5>
                   
-                    <h5 className="font-weight-light pb-2 mb-1 border-bottom" style={{fontSize: '30px', fontWeight: '500'}}>{userData.facultyName}</h5>
+                    <h5 className="font-weight-light pb-2 mb-1 border-bottom" style={{fontSize: '30px', fontWeight: '500',color:'#1E8A87'}}>{userData.facultyName}</h5>
                     
-                    <p className="tx-12 text-muted"> {userData.campusName}</p>
+                    <p className="tx-12 " style={{color:'#000',fontSize:'18px'}}> {userData.campusName}</p>
                       <div className="card-icon-wrapper">
                       <img src={`${config.urlApi}/logos/${userData.logo}`} className="card-img-top" alt="..." />
                       </div>
@@ -200,8 +200,8 @@ function Demo() {
               <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
                <div className="mdc-card">
                   <div className="d-flex flex-row justify-content-between align-items-center">
-                    <h6 className="card-title mb-2 mb-sm-0">รายงานการปล่อยก๊าซเรือนกระจก</h6>
-                    <button className='btn btn-secondary' data-bs-toggle="modal" data-bs-target="#ModalAddActivity"><LibraryAddIcon/> สร้างรายงานการปล่อยก๊าซเรือนกระจก</button>
+                    <h6 className="card-title mb-2 mb-sm-0">รายงานการปล่อยและการดูดกลับก๊าซเรือนกระจก</h6>
+                    <button className='btn btn-secondary' data-bs-toggle="modal" data-bs-target="#ModalAddActivity"><LibraryAddIcon/> สร้างกิจกรรมการปล่อยและการดูดกลับก๊าซเรือนกระจก</button>
                   </div>
                 
                   <div className="d-block d-sm-flex justify-content-between align-items-center">
@@ -218,7 +218,7 @@ function Demo() {
                     </div>
                   </div>
                   <div className="chart-container mt-4">
-                  <table className="table table-hover table-success  table-striped table-bordered">
+                  <table className="table table-hover table-info  table-striped table-bordered">
                     <thead >
                         <tr className='text-center'>
                             <th>ลำดับ</th>
@@ -267,7 +267,7 @@ function Demo() {
         <Footer />
       </div>
     </div>
-    <Modal title='สร้างรายงานกิจกรรมการปล่อยก๊าซเรือนกระจก' id='ModalAddActivity'>
+    <Modal title='สร้างกิจกรรมการปล่อยและการดูดกลับก๊าซเรือนกระจก' id='ModalAddActivity'>
     <form onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-md-6">

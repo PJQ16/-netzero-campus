@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import Footer from '../components/Footer'
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -16,6 +16,10 @@ import TemplateReport from './TemplateReport'
 export default function Report() {
     const {campus_id,fac_id,years,id} = useParams();
     const {userData, setUserData } = useContext(UserContext);
+    const [statusActivity, setStatusActivity] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const navigate = useNavigate();
     useEffect(() => {
       fetchData();
@@ -85,21 +89,51 @@ export default function Report() {
       console.log(e);
     }
     }
+
+    useEffect(() => {
+      const fetchStatus = async () => {
+          try {
+              const response = await axios.get(config.urlApi+`/checkStatusReport/${id}`);
+              setStatusActivity(response.data.result.status_activity);
+          } catch (err) {
+              setError('Error fetching data');
+          } finally {
+              setLoading(false);
+          }
+      };
+
+      fetchStatus();
+  }, [id]);
+
   return (
     <div className="body-wrapper">
     <AsideBar /> 
 
     <div className="main-wrapper mdc-drawer-app-content">
     <HeadBar />
+    <div className="page-wrapper mdc-toolbar-fixed-adjust">
+      <main className="content-wrapper">
     <div className="p-5">
           <div label="รูปภาพโครงสร้างองค์กร">
         {/*   <TabActivityReport/> */}
         <TemplateReport/>
           <div className="d-flex flex-row justify-content-between mt-3">
            <Link to={`/activitySummary/${campus_id}/${fac_id}/${years}/${id}`} className="btn btn-outline-primary me-3"><KeyboardDoubleArrowLeftIcon/> ย้อนกลับ</Link>
+          
+           {statusActivity === '3' || statusActivity === '2' ?(
+          <Link to='/activitydata'><button  className="btn btn-outline-success me-3">กลับไปหน้า สร้างกิจกรรมการปล่อยและการดูดกลับก๊าซเรือนกระจก</button> </Link>
+           )
+          :
+          (
           <button onClick={sendReport}  className="btn btn-outline-success me-3">ส่งรายงาน</button> 
+          )
+          }
+        
+
           </div>
           </div>
+          </div>
+          </main>
           </div>
           <Footer />
           <ToastContainer />

@@ -16,8 +16,6 @@ import { YearContext } from '../App'
 function Main() {
   const {dashboard,
     updatedTest,
-    ranking,
-    handleModal,
     data1,
     data2,
     data3,
@@ -26,9 +24,8 @@ function Main() {
     totalValue3,
     totalValue4,
     dataRatio,
-    modalContent,
     selectedYear,
-    groupedData } = useContext(YearContext)
+    approve } = useContext(YearContext)
   return (
     <div className="page-wrapper mdc-toolbar-fixed-adjust">
 
@@ -62,7 +59,7 @@ function Main() {
                     <h5 className="card-title" style={{color: 'orangered', fontWeight: '800', fontSize: '24px'}}>จำนวนสถาบันที่รายงาน</h5>
                     {dashboard.report.length > 0 ? (
                                     dashboard.report.map((rp, index) => (
-                    <h5 className="font-weight-light pb-2 mb-1 border-bottom" key={index} style={{fontSize: '30px', fontWeight: '500'}}>{parseInt(rp.report) + 51}</h5>
+                    <h5 className="font-weight-light pb-2 mb-1 border-bottom" key={index} style={{fontSize: '30px', fontWeight: '500'}}>{parseInt(rp.report)}</h5>
                     ))
                     ) : (
                       <p>Loading....</p>
@@ -81,12 +78,12 @@ function Main() {
                     <h5 className="card-title" style={{color: 'rgb(0, 204, 204)', fontWeight: '800', fontSize: '24px'}}>การปล่อยก๊าซเรือนกระจกสะสม</h5>
                     {dashboard.total.length > 0 ? (
                                     dashboard.total.map((ghg, index) => (
-                    <h5 className="font-weight-light pb-2 mb-1 border-bottom" key={index} style={{fontSize: '30px', fontWeight: '500'}}>{(parseInt(ghg.tCO2e)*20).toLocaleString()}</h5>
+                    <h5 className="font-weight-light pb-2 mb-1 border-bottom" key={index} style={{fontSize: '30px', fontWeight: '500'}}>{(parseInt(ghg.tCO2e)).toLocaleString()}</h5>
                     ))
                     ) : (
                       <p>Loading....</p>
                     )}
-                    <p className="tx-12 text-muted">รวมจำนวน tCO<sub>2</sub>e</p>
+                    <p className="tx-12 text-muted">จำนวน tCO<sub>2</sub>e</p>
                       <div className="card-icon-wrapper">
                         <i className="fa fa-leaf mdc-drawer-item-icon"></i>
                       </div>
@@ -97,7 +94,7 @@ function Main() {
               <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-9">
                <div className="mdc-card">
                   <div className="d-flex justify-content-between align-items-center">
-                    <h6 className="card-title mb-2 mb-sm-0">การปล่อยและการดูดกลับก๊าซเรือนกระจก ปี {selectedYear +543}</h6>
+                    <h6 className="card-title mb-2 mb-sm-0" style={{fontSize: '28px'}}>การปล่อยและการดูดกลับก๊าซเรือนกระจก ปี {selectedYear +543}</h6>
                   </div>
                   <div className="d-block d-sm-flex justify-content-between align-items-center">
                     <div className="mdc-tab-wrapper revenue-tab mdc-tab--secondary"> 
@@ -132,8 +129,8 @@ function Main() {
                                     title: item.num,
                                     subTitle:item.title,
                                     body: `${(parseInt(
-                                      item.tCO2e)*20
-                                    ).toLocaleString()} tCO2e`,
+                                      item.tCO2e)
+                                    ).toLocaleString()} tCO<sub>2</sub>e`,
                                   };
 
                                   if (item.num === "TOTAL EMISSION") {
@@ -164,36 +161,33 @@ function Main() {
                 <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-8-tablet">
                   <div className="mdc-card">
                     <div className="d-flex d-lg-block d-xl-flex justify-content-between">
-                      <h6 className="card-title">รูปแบบการจัดเก็บข้อมูล ปี {selectedYear+543}</h6>
+                      <h6 className="card-title">รายชื่อมหาวิทยาลัยที่รายงาน <br/> <small style={{fontSize:'14px'}}>(เป็นข้อมูลของมหาวิทยาลัยที่รายงานข้อมูลเข้ามาแล้ว)</small></h6>
+                     
                     </div>
-
+                    
                     <div className="chart-container mt-4">
                     <ul className="list-group">
-                                {ranking.map((rank, index) => (
-                                  <Link
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal"
-                                    key={index}
-                                    onClick={() => handleModal(rank, index)}
-                                    className="text-decoration-none"
-                                  >
-                                    <li className="list-group-item d-flex justify-content-start align-items-center">
-                                      <span
-                                        className={`badge text-bg-${rank.bg} rounded-pill`}
-                                      >
-                                        {index + 1}
-                                      </span>
-                                      <p className="card-text ms-2">
-                                        <small className="text-body-secondary fw-2">
-                                          {rank.eg}
-                                        </small>
-                                      </p>
-                                    </li>
-                                  </Link>
-                                ))}
+                             
+                    {approve.length > 0 ? (
+                approve.map((approved, index) => (
+                  <div key={index} className="text-decoration-none">
+                    <li className="list-group-item d-flex justify-content-start align-items-center">
+                      <p className="card-text ms-2">
+                        <small className="text-body-secondary fw-bold">
+                          {index + 1} {approved.fac_name}
+                        </small>
+                      </p>
+                    </li>
+                  </div>
+                ))
+              ) : (
+                <p className='text-center'>No data available</p>
+              )}
+                             
                               </ul>
 
                     </div>
+                  
                   </div>
                 </div>
                 <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6">
@@ -244,6 +238,14 @@ function Main() {
                                   (parseInt(item.value) / totalValue1) *
                                   100
                                 ).toFixed(0)}%`,
+                                valueFormatter: (v) => {
+                                  // ตรวจสอบว่า v เป็น object และเข้าถึงค่าที่ต้องการ
+                                  if (typeof v === 'object' && v !== null) {
+                                    return `${v.value} tCO₂e`;
+                                  }
+                                  // ใช้กรณีปกติ
+                                  return `${v} tCO₂e`;
+                                },
                             },
                           ]}
                           width={300}
@@ -317,6 +319,14 @@ function Main() {
                                   (parseInt(item.value) / totalValue2) *
                                   100
                                 ).toFixed(0)}%`,
+                                valueFormatter: (v) => {
+                                  // ตรวจสอบว่า v เป็น object และเข้าถึงค่าที่ต้องการ
+                                  if (typeof v === 'object' && v !== null) {
+                                    return `${v.value} tCO₂e`;
+                                  }
+                                  // ใช้กรณีปกติ
+                                  return `${v} tCO₂e`;
+                                },
                             },
                           ]}
                           width={300}
@@ -392,6 +402,14 @@ function Main() {
             : 0; // กำหนดค่าเป็น 0 ถ้า totalValue3 เป็น 0 หรือ undefined
           return `${percentage.toFixed(0)}%`;
         },
+        valueFormatter: (v) => {
+          // ตรวจสอบว่า v เป็น object และเข้าถึงค่าที่ต้องการ
+          if (typeof v === 'object' && v !== null) {
+            return `${v.value} tCO₂e`;
+          }
+          // ใช้กรณีปกติ
+          return `${v} tCO₂e`;
+        },
       },
     ]}
     width={300}
@@ -466,7 +484,17 @@ function Main() {
                                   (parseInt(item.value) / totalValue4) *
                                   100
                                 ).toFixed(0)}%`,
+                                //เพิ่ม ข้างหลัง
+                                valueFormatter: (v) => {
+                                  // ตรวจสอบว่า v เป็น object และเข้าถึงค่าที่ต้องการ
+                                  if (typeof v === 'object' && v !== null) {
+                                    return `${v.value} tCO₂e`;
+                                  }
+                                  // ใช้กรณีปกติ
+                                  return `${v} tCO₂e`;
+                                },
                             },
+                            
                           ]}
                           width={300}
                           height={500}
@@ -495,37 +523,6 @@ function Main() {
               </div>
             </div>
         </main>
-
-
-
-        <Modal id="exampleModal" title={modalContent.body}>
-        <p className="fw-bold h-4 ">ปี: {selectedYear + 543}</p>
-        <table className="table table-hover w-100 p-4">
-          <thead>
-            <tr>
-              <th className='text-start'>รูปแบบการจัดเก็บข้อมูล</th>
-              <th className='text-start'>จำนวน</th>
-            </tr>
-          </thead>
-          <tbody>
-            {groupedData.map(
-              (item, index) =>
-                modalContent.body === item.name && (
-                  <tr key={index}>
-                    <td className='text-start'>{`${item.head_name}`}</td>
-                    <td className='text-start'> {item.count}</td>
-                  </tr>
-                )
-            )}
-          </tbody>
-          <tfoot>
-            <tr>
-              <th className='text-start'>รูปแบบการจัดเก็บข้อมูล</th>
-              <th className='text-start'>จำนวน</th>
-            </tr>
-          </tfoot>
-        </table>
-      </Modal>
     </div>
   
   )

@@ -347,6 +347,8 @@ export default function CreateGHG() {
     <AsideBar /> 
     <div className="main-wrapper mdc-drawer-app-content">
     <HeadBar />
+    <div className="page-wrapper mdc-toolbar-fixed-adjust">
+      <main className="content-wrapper">
     <div className="p-5">
           <div label="กิจกรรมการปล่อยก๊าซเรือนกระจก">
 
@@ -357,6 +359,10 @@ export default function CreateGHG() {
           <Link to={`/activitySummary/${campus_id}/${fac_id}/${years}/${id}`}  className="btn btn-outline-primary me-3">ถัดไป <KeyboardDoubleArrowRightIcon/></Link> 
           </div>
           </div>
+
+         
+          </div>
+          </main>
           </div>
           <Footer />
       </div>

@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import config from "../config";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 function SignIn() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -20,38 +20,114 @@ function SignIn() {
 
   const navigate = useNavigate();
 
-  const handlerLogin = async () => {
-    try {
-      const payload = {
-        email: email,
-        password: password,
-      };
+const handlerLogin = async () => {
+  try {
+    const payload = {
+      email: email,
+      password: password,
+    };
 
-      const res = await axios.post(config.urlApi + "/users/login", payload);
+    const res = await axios.post(config.urlApi + "/users/login", payload);
 
-      if (res.data.message === "success") {
-        Swal.fire({
-          title: "Sign In",
-          icon: "success",
-          text: "เข้าสู่ระบบเรียบร้อยแล้ว",
-          timer: 800,
-          timerProgressBar: true,
-        });
-        localStorage.setItem(config.token_name, res.data.token);
-        navigate("/dashboard");
-      } else if (res.data.message === "User not found") {
-        Swal.fire({
-          title: "Sign In",
-          icon: "warning",
-          text: "ไม่พบข้อมูลในระบบ",
-          timer: 2000,
-          timerProgressBar: true,
-        });
-      }
-    } catch (e) {
-      toast.error("ชื่อผู้ใช้งาน หรือ รหัสผ่านไม่ถูกต้อง", { autoClose: 1000 });
+    if (res.data.message === "success") {
+      Swal.fire({
+        title: "Sign In",
+        icon: "success",
+        text: "เข้าสู่ระบบเรียบร้อยแล้ว",
+        timer: 800,
+        timerProgressBar: true,
+      });
+      localStorage.setItem(config.token_name, res.data.token);
+      navigate("/dashboard");
+    } else if (res.data.message === "User not found") {
+      Swal.fire({
+        title: "Sign In",
+        icon: "warning",
+        text: "ไม่พบข้อมูลในระบบ",
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    } else if (res.data.message === "Email not verified") {
+      Swal.fire({
+        title: "Email Not Verified",
+        icon: "warning",
+        text: "กรุณาทำการยืนยัน email ของท่าน",
+        showCancelButton: true,
+        confirmButtonText: "ส่งโปรดตรวจสอบ email ของท่าน",
+        cancelButtonText: "ปิด",
+        timer: 60000,
+        timerProgressBar: true,
+        preConfirm: async () => {
+          try {
+            await axios.post(config.urlApi + "/users/resend-verification", { email });
+            Swal.fire({
+              icon: "success",
+              title: "Email Sent",
+              text: "โปรดตรวจสอบ email ของท่าน",
+              timer: 2000,
+              timerProgressBar: true,
+            });
+          } catch (error) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "ไม่สามารถส่ง email ได้",
+            });
+          }
+        },
+      });
     }
-  };
+  } catch (e) {
+    if (e.response && e.response.data) {
+     
+      if( e.response.data.error === "User not found" ){
+         toast.error('ไม่พบผู้ใช้งานในระบบ',{autoClose:1000})
+      }
+
+      if( e.response.data.error === "Invalid password" ){
+        toast.error('รหัสผ่านไม่ถูกต้อง',{autoClose:1000})
+      }
+
+      if( e.response.data.error === "Email not verified" ){
+        Swal.fire({
+          title: "Email Not Verified",
+          icon: "warning",
+          text: "กรุณาทำการยืนยันทาง email ของท่าน",
+          showCancelButton: true,
+          confirmButtonText: "ส่งการยืนยันตัวตน โปรดตรวจสอบ email ของท่าน",
+          cancelButtonText: "ปิด",
+          timer: 60000,
+          timerProgressBar: true,
+          preConfirm: async () => {
+            try {
+              await axios.post(config.urlApi + "/users/resend-verification", { email });
+              Swal.fire({
+                icon: "success",
+                title: "Email Sent",
+                text: "โปรดตรวจสอบ email ของท่าน",
+                timer: 2000,
+                timerProgressBar: true,
+              });
+            } catch (error) {
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "ไม่สามารถส่ง email ได้",
+              });
+            }
+          },
+        });
+    }
+    } else {
+      Swal.fire({
+        title: "Error",
+        icon: "error",
+        text: "เกิดข้อผิดพลาดกับ Server",
+      });
+    }
+  }
+};
+
 
   const validateEmail = () => {
     if (!/^\S+@\S+\.\S+$/.test(email)) {
@@ -118,9 +194,9 @@ function SignIn() {
                   เข้าสู่ระบบ
                 </button>
               )}
-            {/*   <a className="text-muted" href="#!">
+             <Link to="/forgot-password" className="text-muted">
                 Forgot password?
-              </a> */}
+              </Link> 
             </div>
 
             <div className="d-flex flex-row align-items-center justify-content-center pb-4 mb-4">
@@ -138,13 +214,14 @@ function SignIn() {
           <div className="d-flex flex-column justify-content-center gradient-custom-2 h-100 mb-4">
             <div className="text-white px-3 py-4 p-md-5 mx-md-4">
               <h2 className="mb-4">Net Zero Campus</h2>
-              <p className="small mb-0">
+              <p className="mb-0" style={{fontSize:'18px'}}>
               โครงการที่เกิดจากความร่วมมือระหว่างมหาวิทยาลัยและสถาบันอุดมศึกษา โดยมีวัตถุประสงค์เพื่อผลักดันมหาวิทยาลัยในเครือข่ายให้บรรลุความเป็นกลางทางคาร์บอน และตอบโจทย์ความต้องการของประเทศด้านการจัดการก๊าซเรือนกระจก
               </p>
             </div>
           </div>
         </MDBCol>
       </MDBRow>
+      <ToastContainer />
     </MDBContainer>
   );
 }

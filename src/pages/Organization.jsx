@@ -57,6 +57,8 @@ const fetchData = async () => {
     <AsideBar /> 
     <div className="main-wrapper mdc-drawer-app-content">
     <HeadBar />
+    <div className="page-wrapper mdc-toolbar-fixed-adjust">
+      <main className="content-wrapper">
     <div className="p-5">
           <div label="รูปภาพโครงสร้างองค์กร">
           <TabActivityOrganization/>
@@ -65,6 +67,10 @@ const fetchData = async () => {
           <Link to={`/activityCreateGHG/${campus_id}/${fac_id}/${years}/${id}`}  className="btn btn-outline-primary me-3">ถัดไป <KeyboardDoubleArrowRightIcon/></Link> 
           </div>
           </div>
+
+         
+          </div>
+          </main>
           </div>
           <Footer />
       </div>

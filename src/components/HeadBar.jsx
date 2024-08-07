@@ -7,6 +7,13 @@ import Calenda from './Calenda'
 import { YearContext } from '../App'
 import { UserContext } from './MyContext'
 import config from '../config'
+import SettingsIcon from '@mui/icons-material/Settings';
+import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
+import HeadphonesIcon from '@mui/icons-material/Headphones';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { Tooltip } from '@mui/material'
+import FindInPageIcon from '@mui/icons-material/FindInPage';
+import { Link } from 'react-router-dom'
 
 
 function HeadBar() {
@@ -22,9 +29,12 @@ const {userData} = useContext(UserContext);
               <button className="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
               <span className=""></span>
               <div className="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
+           
               <i className="material-icons mdc-text-field__icon">search</i>
+             
                <Calenda /> 
-                <input className="mdc-text-field__input" value={selectedYear + 543} onChange={(e) => selectedYear(e.target.value)} id="text-field-hero-input" />
+              
+                <input className="mdc-text-field__input" readOnly value='ค้นหาปีที่รายงาน' onChange={(e) => selectedYear(e.target.value)} id="text-field-hero-input" />
                 <div className="mdc-notched-outline">
                 <div className="mdc-notched-outline__leading"></div>
                   <div className="mdc-notched-outline__notch">
@@ -36,7 +46,19 @@ const {userData} = useContext(UserContext);
             </div>
             <div className="mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section-right">
               <div className="menu-button-container menu-profile d-none d-md-block">
-               
+              {/* <Tooltip title='Help Desk' placement='top'>
+              <div className="btn-group">
+            <button type="button" class="btn rouned" data-bs-toggle="dropdown" aria-expanded="false"><SettingsIcon/></button>
+            <ul className="dropdown-menu">
+              <li><a className="dropdown-item" href="#"><HeadphonesIcon/> ติดต่อเรา</a></li>
+              <li><a className="dropdown-item" href="#"><PsychologyAltIcon/> แจ้งปัญหา</a></li>
+              <li><a className="dropdown-item" href="#"><MenuBookIcon/> คู่มือการใช้งาน</a></li>
+              <li><Link className="dropdown-item" to="/reference"><FindInPageIcon/> เอกสารอ้างอิง</Link></li>
+            </ul>
+          </div>
+          </Tooltip> */}
+        
+                        
                   <div className="mdc-menu mdc-menu-surface" tabIndex="-1">
                     <ul className="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
                     <li className="mdc-list-item" role="menuitem">

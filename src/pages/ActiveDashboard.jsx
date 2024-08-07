@@ -68,7 +68,7 @@ function ActiveDashboard() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [groupedData, setGroupedData] = useState([]);
-
+  const [approve,setApprove] = useState([]);
   const fetchDataApi = async (year) => {
     try {
       const res = await axios.get(`${config.urlApi}/activity/showPeriod?year=${year}`);
@@ -106,7 +106,7 @@ function ActiveDashboard() {
     { num: "GHG Removal",title:'การดูดกลับก๊าซเรือนกระจก', color: "#6B9A5B", icon: SpaIcon, tCO2e: 0 },
     { num: "Scope 1",title:'การปล่อยก๊าซเรือนกระจกทางตรง', color: "#1C87D7", icon: LocalGasStationIcon, tCO2e: 0 },
     { num: "Scope 2",title:'การปล่อยก๊าซเรือนกระจกทางอ้อม', color: "#2752D1", icon: BoltIcon, tCO2e: 0 },
-    { num: "Scope 3",title:'การปล่อยก๊าซเรือนกระจกทางอ้อม', color: "#754ABF", icon: FlightLandIcon, tCO2e: 0 },
+    { num: "Scope 3",title:'การปล่อยก๊าซเรือนกระจกทางอ้อม', color: "#183482", icon: FlightLandIcon, tCO2e: 0 },
   ];
 
   const ranking = [
@@ -116,14 +116,14 @@ function ActiveDashboard() {
     { eg: "GHG Removal", bg: "success" },
   ];
 
-  const color = ["#C8DEB9", "#A6CEAA", "#6BAB90", "#55917F", "#5A6F6D"];
+  const color = ["#0D6056", "#0C7E67", "#108C82", "#0BB2A0", "#0DB09B","#35BEAE","#70C9B7","#4BAAC6","#6EB8DD","#499DCB","#3C9DCA","#339CDD","#0084CE","#0F5A7C"];
 
   const data1 = Array.isArray(dashboard.scope1)
     ? dashboard.scope1.map((scope, index) => ({
         id: index + 1,
         value: parseFloat(scope.tCO2e).toFixed(0),
         label: scope.head_name,
-        color: color[index % 5],
+        color: color[index],
      
       }))
     : [];
@@ -142,7 +142,7 @@ function ActiveDashboard() {
         id: index + 1,
         value: parseInt(scope.tCO2e).toFixed(),
         label: scope.head_name,
-        color: color[index % 5],
+        color: color[index],
       }))
     : [];
 
@@ -225,6 +225,22 @@ function ActiveDashboard() {
   const totalValue3 = data3.reduce((acc, item) => acc + parseInt(item.value), 0);
   const totalValue4 = dataRatio.reduce((acc, item) => acc + parseInt(item.value), 0);
 
+
+  useEffect(()=>{
+    approvedReport();
+  },[selectedYear]);
+
+  const approvedReport = async() =>{
+    try{
+      const respon =  await axios(config.urlApi + `/universityReport/${userData.facultyID}`);
+      setApprove(respon.data.result);
+      fetchData();
+
+    }catch(e){
+      console.log(e.mssage);
+    }
+  }
+
   return (
     <ActiveDSBContext.Provider
     value={{
@@ -250,6 +266,8 @@ function ActiveDashboard() {
       setSearchTerm,
       selectedYear,
       setSelectedYear,
+      userData,
+      approve
     }}
   >
       <div className="body-wrapper">

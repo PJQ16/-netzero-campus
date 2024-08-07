@@ -86,6 +86,8 @@ export default function Summary() {
     <AsideBar /> 
     <div className="main-wrapper mdc-drawer-app-content">
     <HeadBar />
+    <div className="page-wrapper mdc-toolbar-fixed-adjust">
+      <main className="content-wrapper">
     <div className="p-5">
           <div label="สรุปผลการคำนวณ">
           <TabActivitySummary scopeData={scopeData} percentages={percentages} years={years}  />
@@ -94,6 +96,8 @@ export default function Summary() {
           <Link to={`/activityReport/${campus_id}/${fac_id}/${years}/${id}`}  className="btn btn-outline-primary me-3">ถัดไป <KeyboardDoubleArrowRightIcon/></Link> 
           </div>
           </div>
+          </div>
+          </main>
           </div>
           <Footer />
       </div>

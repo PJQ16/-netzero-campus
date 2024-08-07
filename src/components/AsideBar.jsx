@@ -10,6 +10,7 @@ import { UserContext } from './MyContext';
 import config from '../config';
 import Swal from 'sweetalert2';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import FindReplaceIcon from '@mui/icons-material/FindReplace';
 import axios from 'axios';
 
 function AsideBar() {
@@ -169,6 +170,9 @@ function AsideBar() {
               )}
             </div>
 
+           
+           
+
 
             {userData && userData.firstname && (
             <div className="mdc-list-item mdc-drawer-item">
@@ -196,6 +200,7 @@ function AsideBar() {
                 </Link>
               </div>
             )}
+
           </nav>
         </div>
       </div>
