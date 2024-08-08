@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Accordion from "../../components/Accordion";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import DnsIcon from "@mui/icons-material/Dns";
 import Modal from "../../components/Modal";
 import TransferList from "../../components/TranferList";
-import SourcesFile from "../../components/SourcesFile";
 import Offcanvas from "../../components/Offcanvas";
 import ConvertCurrency from "../../components/ConverCurrency";
-import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Tooltip } from "@mui/material";
@@ -16,14 +14,9 @@ import AddIcon from '@mui/icons-material/Add';
 function TabActivity({
   deleteList,
   handleSubmitData,
-  id, 
-  campus_id, 
-  fac_id,
   handleInputChange,
   formData,
-  setFormData,
   modalData,
-  setModalData,
   insertDataActivity,
   handlerRemoveHead,
   activities,

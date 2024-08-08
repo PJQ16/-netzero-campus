@@ -32,7 +32,9 @@ export default function VerifyEmail() {
         {message === 'Invalid or expired token' ? 
         <>
          <h5 className="card-title fw-bold" style={{fontSize:'20px'}}>{message}</h5>
-        <img src="https://png.pngtree.com/png-vector/20220527/ourmid/pngtree-red-grunge-expired-rubber-stamp-png-image_4750216.png" className="w-100" />
+        <img src="https://png.pngtree.com/png-vector/20220527/ourmid/pngtree-red-grunge-expired-rubber-stamp-png-image_4750216.png"
+        alt="expried"
+        className="w-100" />
         <p className="card-text fw-bold" style={{fontSize:'20px'}}>
          Your token has expired
         </p>
@@ -44,7 +46,9 @@ export default function VerifyEmail() {
         :
         <>
         <h5 className="card-title">Verify your email</h5>
-        <img src="https://cdn.prod.website-files.com/639c99568848490eb3265dae/64c2c8ec1a7ebea427df2374_Open%20Graph%20Image%20-%20Verified%20Email.png" className="w-100" />
+        <img src="https://cdn.prod.website-files.com/639c99568848490eb3265dae/64c2c8ec1a7ebea427df2374_Open%%20Image%20-%20Verified%20Email.png"
+        alt="verify"
+        className="w-100" />
         <p className="card-text fw-bold" style={{fontSize:'20px'}}>
         คุณสามารถเข้าสู่ระบบและใช้งานระบบรายงานการปล่อยก๊าซเรือนกระจกของเราได้แล้ว
           <p>{message}</p>

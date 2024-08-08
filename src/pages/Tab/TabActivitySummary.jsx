@@ -16,13 +16,13 @@ const StyledPieChart = styled(PieChart)(({ theme }) => ({
   width: '100%',
   height: '100%', // เปลี่ยน height เป็น 100% เพื่อให้กราฟใช้ขนาดจากคอนเทนเนอร์ที่ห่อหุ้ม
   [theme.breakpoints.up('sm')]: {
-    width: '50%',
+    width: '100%',
   },
   [theme.breakpoints.up('md')]: {
-    width: '40%',
+    width: '100%',
   },
   [theme.breakpoints.up('lg')]: {
-    width: '30%',
+    width: '100%',
   },
 }));
 
@@ -52,14 +52,14 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
         <div className="col-md-5 m-3">
           <div className="card shadow border-0">
             <div className="card-body">
-              <div style={{ height: '800px' }}> {/* กำหนด height สำหรับคอนเทนเนอร์ */}
+              <div style={{ height: '600px' }}> {/* กำหนด height สำหรับคอนเทนเนอร์ */}
               <StyledPieChart
-  margin={{ top: 50, bottom: 50, left: 50, right: 50 }}
+  margin={{ top: 70, bottom: 70, left: 70, right: 70 }} // ปรับ margin ให้มากขึ้น
   slotProps={{
     legend: {
       direction: 'column',
       position: { vertical: 'bottom', horizontal: 'left' },
-      padding:{ top: 120, bottom: 0, left: 0, right: 100 }
+      padding:{ top: 0, bottom: 0, left: 0, right: 0 }
     },
   }}
   series={[
@@ -84,9 +84,9 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
         return isNaN(parseFloat(percentage)) ? '' : `${percentage}%`;
       },
       highlightScope: { faded: 'global', highlighted: 'item' },
-      faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-      innerRadius: 100,
-      outerRadius: 180,
+      faded: { innerRadius: 40, additionalRadius: -40, color: 'gray' }, // ขยายขนาดของ faded area
+      innerRadius: 120, // ขยายขนาดของ innerRadius
+      outerRadius: 200, // ขยายขนาดของ outerRadius
       paddingAngle: 3,
       cornerRadius: 10,
       endAngle: 360,
@@ -95,6 +95,7 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
 >
   <PieCenterLabel>ผลการคำนวณ ปี {years}</PieCenterLabel>
 </StyledPieChart>
+
               </div>
             </div>
           </div>
@@ -150,7 +151,10 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
                     </tr>
                     <tr className="text-center">
                       <td className="text-start">ผลรวม Scope 1 & 2 & 3</td>
-                      <td>{scopeData.reduce((acc, item) => acc + parseFloat(item.tco2e), 0) .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                      <td>
+                        {scopeData.reduce((acc, item) => acc + parseFloat(item.tco2e), 0)
+                          .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </td>
                       <td>-</td>
                       <td>100</td>
                     </tr>

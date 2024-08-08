@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import ActivityDetail from './pages/ActivityDetail';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -31,11 +31,26 @@ import CheckYourEmail from './pages/CheckEmail';
 import ForgotPasswordForm from './pages/ForgotPassword';
 import VerifyEmail from './pages/VerifyEmail';
 import Reference from './pages/Reference';
+import Spinner from './components/Spinner';
+import Policy from './pages/Policy';
 
 export const YearContext = createContext();
 function App() {
-  const navigate = useNavigate();
   const [spinners, setSpinners] = useState(true);
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // Set loading to true when location changes (i.e., page changes)
+    setLoading(true);
+
+    // Simulate a network request or loading delay
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1000); // Adjust time as needed
+
+    return () => clearTimeout(timer); // Cleanup timer on unmount
+  }, [location]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -77,12 +92,9 @@ function App() {
 
   useEffect(() => {
     fetchDataApi(selectedYear);
-  }, [selectedYear]);
-
-  useEffect(() => {
     fetchDashboard(selectedYear);
   }, [selectedYear]);
-
+  
   const fetchDashboard = async () => {
     try {
       const res = await axios.get(config.urlApi + `/dataDashboard/${selectedYear}`);
@@ -353,6 +365,9 @@ function App() {
         }}
       >
         <UserDataProvider> 
+        {loading ? (
+        <Spinner />
+      ) : (
           <Routes>
            {/*  <Route path='/' element={<Index />} /> */}
             <Route path='/login' element={<SignIn />} />
@@ -377,7 +392,9 @@ function App() {
             <Route path="/verify/:token" element={<VerifyEmail />} />
           {/*   <Route path='/' element={<Dashboard/>} /> */}
             <Route path='*' element={<NotFound />} />
+            <Route path='/policy' element={<Policy />} />
           </Routes>
+      )}
          </UserDataProvider> 
          </YearContext.Provider>
       )}

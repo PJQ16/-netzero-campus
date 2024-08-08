@@ -30,7 +30,7 @@ function TabActivityReport() {
 
   useEffect(()=>{
     fetchData();
-  },[])
+  })
 
   const fetchData = async() =>{
     try{

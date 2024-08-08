@@ -15,9 +15,10 @@ function TabActivityLocation() {
   const [showImages,setShowImages] = useState([]);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchImages();
-  },[])
+  });
+
   const fetchImages = async()=>{
       try{
         const res = await axios.get(config.urlApi + `/images/ImageFr02/${id}`)

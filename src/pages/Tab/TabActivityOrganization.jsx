@@ -16,7 +16,7 @@ function TabActivityOrganization() {
 
   useEffect(()=>{
     fetchImages();
-  },[])
+  })
   const fetchImages = async()=>{
       try{
         const res = await axios.get(config.urlApi + `/images/ImageFr03/${id}`)
@@ -113,7 +113,7 @@ return (
             <label htmlFor="fileInput">
                   <img
                     src={`${config.urlApi}/uploads/${image.file_name}`}
-                    alt="Upload"
+                    alt={`Profile image of the organization ${image.id}`}
                     className="img-fluid"
                   />
                 </label>
@@ -131,7 +131,7 @@ return (
                 <div key={index} style={{ position: 'relative', marginRight: '10px', marginBottom: '10px' }}>
                   <img
                     src={image.src}
-                    alt={`Image ${index + 1}`}
+                    alt={`Uploaded image${index + 1}`}
                     className="img-fluid"
                     style={{ marginRight: '5px' }}
                   />
@@ -147,7 +147,7 @@ return (
                 <label htmlFor="fileInput">
                   <img
                     src="https://media.istockphoto.com/id/1248723171/vector/camera-photo-upload-icon-on-isolated-white-background-eps-10-vector.jpg?s=612x612&w=0&k=20&c=e-OBJ2jbB-W_vfEwNCip4PW4DqhHGXYMtC3K_mzOac0="
-                    alt="Upload"
+                    alt="Camera icon for uploading images"
                     className="img-fluid"
                   />
                 </label>
