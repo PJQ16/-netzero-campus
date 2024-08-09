@@ -117,7 +117,11 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
                     {scopeData.map((item, index) => (
                       <tr className="text-center" key={index}>
                         <td className="text-start">{item.name}</td>
-                        <td>{parseFloat(item.tco2e).toLocaleString('en-US', {minimumFractionDigits: 2 })}</td>
+                        <td>
+                         {item.name === 'GHG Removal' ? '-' : ''}
+                          {parseFloat(item.tco2e).toLocaleString('en-US', {minimumFractionDigits: 2 })}
+                          
+                          </td>
                         <td>
                           {item.name === 'scope1' || item.name === 'scope2'
                             ? (

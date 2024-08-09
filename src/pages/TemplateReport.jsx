@@ -50,7 +50,9 @@ export default function TemplateReport() {
                     {data.map((item, index) => (
                         <tr key={index}>
                             <td className='text-start'>{index + 1}. {item.head_name}</td>
-                            <td className='text-center'>{parseFloat(item.tCO2e).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td className='text-center'>
+                                {item.head_name === 'ภาคการดูดกลับ (GHG Removal)' ? (<>-</>) :(<></>)}
+                                {parseFloat(item.tCO2e).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -58,7 +60,11 @@ export default function TemplateReport() {
                     <tr>
                         <th className='text-center'>รวม</th>
                         <th className='text-center'>
-                            {data.reduce((acc, item) => acc + parseFloat(item.tCO2e), 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        {data.map((item, index) => (
+                         item.head_name === 'ภาคการดูดกลับ (GHG Removal)' ? (<>-</>) :(<></>)
+                        ))}
+
+{data.reduce((acc, item) => acc + parseFloat(item.tCO2e), 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </th>
                     </tr>
                 </tfoot>
@@ -151,7 +157,7 @@ export default function TemplateReport() {
                             </tr>
                             <tr>
                                 <td className='text-start'>ภาคดูดกลับ</td>
-                                <td className='text-center'>{calculateTotal(information.removal)}</td>
+                                <td className='text-center'>-{calculateTotal(information.removal)}</td>
                                 <td className='text-center'>Ton CO<sub>2</sub>e</td>
                             </tr>
                             <tr>

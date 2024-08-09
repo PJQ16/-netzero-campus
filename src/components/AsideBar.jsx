@@ -11,6 +11,8 @@ import config from '../config';
 import Swal from 'sweetalert2';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import FindReplaceIcon from '@mui/icons-material/FindReplace';
+
+
 import axios from 'axios';
 
 function AsideBar() {
@@ -201,6 +203,22 @@ function AsideBar() {
               </div>
             )}
 
+
+        {userData && userData.firstname ? (
+              <div className="mdc-list-item mdc-drawer-item">
+                <Link to={'/reference'}  className="mdc-drawer-link">
+                  <FindReplaceIcon />
+                  เอกสารอ้างอิง
+                </Link>
+              </div>
+            ) : (
+              <div className="mdc-list-item mdc-drawer-item">
+                <Link to={'/reference'} className="mdc-drawer-link">
+                  <FindReplaceIcon />
+                  เอกสารอ้างอิง
+                </Link>
+              </div>
+            )}
           </nav>
         </div>
       </div>
