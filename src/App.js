@@ -1,13 +1,13 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext, lazy, Suspense } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
-import ActivityDetail from './pages/ActivityDetail';
+/* import ActivityDetail from './pages/ActivityDetail'; */
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { UserDataProvider } from './components/MyContext'; 
 import NotFound from './pages/NotFound';
 import './index.css';
-import NewDashBoard from './pages/NewDashBoard';
+/* import NewDashBoard from './pages/NewDashBoard'; */
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
@@ -17,22 +17,39 @@ import FlightLandIcon from "@mui/icons-material/FlightLand";
 import SpaIcon from "@mui/icons-material/Spa";
 import BoltIcon from "@mui/icons-material/Bolt";
 import config from './config';
-import SignIn from './pages/SignIn';
-import Demo from './components/Demo';
-import SignUp from './pages/SignUp';
-import Profile from './pages/Profile';
-import Organization from './pages/Organization';
-import CreateGHG from './pages/CreateGHG';
-import Summary from './pages/Sumary';
-import Report from './pages/Report';
-import ActiveDashboard from './pages/ActiveDashboard';
-import ResetPassword from './pages/ResetPassword';
+/* import SignIn from './pages/SignIn'; */
+/* import Demo from './components/Demo';
+import SignUp from './pages/SignUp'; */
+/* import Profile from './pages/Profile';
+import Organization from './pages/Organization'; */
+/* import CreateGHG from './pages/CreateGHG'; */
+/* import Summary from './pages/Sumary'; */
+/* import Report from './pages/Report'; */
+/* import ActiveDashboard from './pages/ActiveDashboard'; */
+
+/* import ResetPassword from './pages/ResetPassword';
 import CheckYourEmail from './pages/CheckEmail';
 import ForgotPasswordForm from './pages/ForgotPassword';
-import VerifyEmail from './pages/VerifyEmail';
+import VerifyEmail from './pages/VerifyEmail'; */
 import Reference from './pages/Reference';
 import Spinner from './components/Spinner';
 import Policy from './pages/Policy';
+
+const NewDashBoard = lazy(()=> import('./pages/NewDashBoard'));
+const SignIn =  lazy(()=> import('./pages/SignIn'));
+const CreateGHG =lazy (()=>import('./pages/CreateGHG'));
+const Organization = lazy (()=>import('./pages/Organization'));
+const Profile = lazy (()=>import('./pages/Profile'));
+const Summary = lazy (()=>import('./pages/Sumary'));
+const Report = lazy (()=>import('./pages/Report'));
+const ActiveDashboard = lazy (()=>import('./pages/ActiveDashboard'));
+const ActivityDetail  = lazy (()=>import('./pages/ActivityDetail'));
+const ResetPassword = lazy (()=>import('./pages/ResetPassword'));
+const CheckYourEmail  = lazy (()=>import('./pages/CheckEmail'));
+const VerifyEmail  = lazy (()=>import('./pages/VerifyEmail'));
+const ForgotPasswordForm  = lazy (()=>import('./pages/ForgotPassword'));
+const Demo  = lazy (()=>import('./components/Demo'));
+const SignUp = lazy (()=>import('./pages/SignUp'));
 
 export const YearContext = createContext();
 function App() {
@@ -365,9 +382,9 @@ function App() {
         }}
       >
         <UserDataProvider> 
-        {loading ? (
-        <Spinner />
-      ) : (
+      
+      
+        <Suspense fallback={  <Spinner />}>
           <Routes>
            {/*  <Route path='/' element={<Index />} /> */}
             <Route path='/login' element={<SignIn />} />
@@ -394,7 +411,8 @@ function App() {
             <Route path='*' element={<NotFound />} />
             <Route path='/policy' element={<Policy />} />
           </Routes>
-      )}
+          </Suspense>
+   
          </UserDataProvider> 
          </YearContext.Provider>
       )}

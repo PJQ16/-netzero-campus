@@ -38,7 +38,7 @@ const handlerLogin = async () => {
         timerProgressBar: true,
       });
       localStorage.setItem(config.token_name, res.data.token);
-      navigate("/dashboard");
+      navigate("/policy");
     } else if (res.data.message === "User not found") {
       Swal.fire({
         title: "Sign In",

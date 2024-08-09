@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Accordion from "../../components/Accordion";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import DnsIcon from "@mui/icons-material/Dns";
@@ -10,6 +10,7 @@ import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Tooltip } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import Spinner from "../../components/Spinner";
 
 function TabActivity({
   deleteList,
@@ -41,6 +42,7 @@ function TabActivity({
       {chkStatus ? (<>
       
       </>):(
+       
         <button
           className="btn btn-primary"
           data-bs-toggle="modal"
@@ -66,7 +68,6 @@ function TabActivity({
 
       {!hasActivities ? (
         <>
-        
         <div className="d-flex flex-row justify-content-center" style={{ height: 'auto' }}>
           
           <TransferList
@@ -97,6 +98,7 @@ function TabActivity({
                               headCategory.id === 31 ||
                               headCategory.id === 32 ||
                               headCategory.id === 33 ||
+                              headCategory.id === 35 ||
                               headCategory.id === 39 ||
                               headCategory.id === 43 ||
                               headCategory.id === 12 ? (
@@ -178,6 +180,7 @@ function TabActivity({
                                             headCategory.id === 31 ||
                                             headCategory.id === 32 ||
                                             headCategory.id === 33 ||
+                                            headCategory.id === 35 ||
                                             headCategory.id === 39 ||
                                             headCategory.id === 43 ||
                                             headCategory.id === 12
@@ -256,8 +259,8 @@ function TabActivity({
                                         <td className="text-center">
                                           {activity.name ===
                                           "ขอบเขตที่ 1: การปล่อยและดูดกลับก๊าซเรือนกระจกทางตรง"
-                                            ? parseFloat(data_scope.EF)
-                                            : parseFloat(data_scope.kgCO2e)}
+                                            ? parseFloat(data_scope.EF).toFixed(4)
+                                            : parseFloat(data_scope.kgCO2e).toFixed(4)}
                                         </td>
                                         <td className="text-center">
                                           {activity.name ===
