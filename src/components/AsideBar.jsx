@@ -26,7 +26,9 @@ function AsideBar() {
   const fetchData = async () => {
     try {
       const response = await axios.get(config.urlApi + '/users/showUserApi', config.headers());
-
+      if(response.data.message === ''){
+          return
+      }else{
       if (response.data.message === 'success') {
         setUserData({
           firstname: response.data.result.fname,
@@ -44,6 +46,7 @@ function AsideBar() {
         // กรณีที่ไม่สำเร็จ อาจจะตั้งค่า userData เป็นค่าว่าง
         setUserData({});
       }
+    }
     } catch (error) {
       console.error(error);
       setUserData({});

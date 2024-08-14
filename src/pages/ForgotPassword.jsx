@@ -10,6 +10,7 @@ import {
 } from "mdb-react-ui-kit";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { toast, ToastContainer } from "react-toastify";
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
@@ -41,14 +42,19 @@ const ForgotPasswordForm = () => {
         text: "โปรดตรวจสอบข้อความการตั้งค่ารหัสผ่านใหม่ ที่ Email ของท่าน",
       });
       navigate("/login");
-    } catch (error) {
+    } catch (e) {
       // ตรวจสอบรายละเอียดข้อผิดพลาดจาก `error.response`
-      console.error("Error details:", error.response?.data || error.message);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "เกิดข้อผิดพลาดในการส่งอีเมล",
-      });
+      if (e.response && e.response.data) {
+        if(e.response.data.error  === 'User with this email does not exist'){
+          toast.error('ไม่พบ Email ผู้ใช้งานในระบบ',{autoClose:1000});
+        }else{
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "เกิดข้อผิดพลาดในการส่งอีเมล",
+        });
+      }
+    }
     }
   };
   
@@ -107,6 +113,7 @@ const ForgotPasswordForm = () => {
           </div>
         </MDBCol>
       </MDBRow>
+      <ToastContainer />
     </MDBContainer>
   );
 };

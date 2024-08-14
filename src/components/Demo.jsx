@@ -53,6 +53,7 @@ function Demo() {
           latitude: response.data.result.faculty.latitude,
           longitude: response.data.result.faculty.longitude,
           logo: response.data.result.faculty.logo,
+          email: response.data.result.email,
         });
       }
     } catch (error) {
@@ -172,8 +173,45 @@ function Demo() {
     }
   };
 
-  const handlerRemove = (ID)=>{
-      alert(ID);
+  const handlerRemove = async(ID)=>{
+     try{
+      const payload = {
+        email:userData.email,
+        activityId:ID
+      };
+      const res = await Swal.fire({
+        icon: "warning",
+        title: "ต้องการลบหน่วยงานนี้ ใช่หรือไม่ ?",
+        text:"โปรดระมัดระวังในการลบข้อมูล",
+        input: 'text',
+        inputPlaceholder: 'ตอบ "YES" เพื่อลบข้อมูล',
+        inputAttributes: {
+          pattern: '^[Y][E][S]$', // ตรวจสอบตัวอักษร "YES" ในทุกกรณี
+          maxlength: 3 // กำหนดความยาวสูงสุดเป็น 3 ตัวอักษร
+        },
+        confirmButtonColor: "#7a3",
+        confirmButtonText: "Submit",
+        showCancelButton: true,
+        cancelButtonColor: "#b45e",
+        cancelButtonText: "Cancel",
+        inputValidator: (value) => {
+          if (!value || !value.match(/^[Y][E][S]$/)) {
+            return 'โปรดยืนยันด้วยคำว่า YES';
+          }
+        }
+      });
+  
+      if (res.isConfirmed) {
+        await axios.post(config.urlApi + '/saveRemoveActivity', payload);
+        await Swal.fire({ title: 'ลบ', text: 'ลบข้อมูลสำเร็จ', icon: 'success', timer: 800 });
+        fetchDataPeriod();
+      }
+
+    
+     }catch(e){
+      console.error("Error Remove data:", e);
+     }
+   
   }
   return (
     <div className="body-wrapper">
@@ -292,21 +330,20 @@ function Demo() {
                                             item.years + 543
                                           }/${item.id}`}
                                         >
-                                          <Tooltip
-                                            title={"คลิกเพื่อตรวจสอบ"}
-                                            placement="top"
-                                          >
+                                     
                                             <EditIcon />
                                             คลิกดูข้อมูล
-                                          </Tooltip>
+                                         
                                         </Link>
                                       </li>
+                                      {item.status_activity === '3' || item.status_activity === '2' ? (<></>) : (
                                       <li>
                                         <a className="dropdown-item" href="#" onClick={()=>handlerRemove(item.id)}>
                                         <DeleteForeverIcon/>
                                            ลบข้อมูล
                                         </a>
                                       </li>
+                                      )}
                                     </ul>
                                   </div>
                                 </td>

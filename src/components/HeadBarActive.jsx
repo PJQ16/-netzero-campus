@@ -58,7 +58,7 @@ const {userData} = useContext(UserContext);
                   {userData.firstname !== '' ? (
                     <>
                      <span className="figure">
-                         <img src={`${config.urlApi}/logos/${userData.logo}`}  className="user" />
+                    {/*   <img src={`${config.urlApi}/logos/${userData.logo}`} className="user" /> */}
                        </span>
                        <span className="user-name">
                          {userData.firstname}

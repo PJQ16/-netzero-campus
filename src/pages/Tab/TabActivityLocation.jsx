@@ -4,6 +4,7 @@ import axios from 'axios';
 import config from '../../config';
 import { useParams } from 'react-router-dom';
 import { Tooltip } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function TabActivityLocation() {
   const [imageLocations, setImageLocations] = useState([]);
@@ -13,6 +14,9 @@ function TabActivityLocation() {
   const [activityPeriodId,setActivityPeriodId] = useState(id);
 
   const [showImages,setShowImages] = useState([]);
+  const [statusActivity, setStatusActivity] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
 
   useEffect(() => {
@@ -100,6 +104,60 @@ function TabActivityLocation() {
     } 
 };
 
+const handleRemoveProfile = async (pfID) => {
+  if (!pfID) {
+    return Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Value Invalid',
+      showConfirmButton: false,
+    });
+  }
+
+  const res = await Swal.fire({
+    icon: 'question',
+    title: 'Are you sure?',
+    text: 'คุณต้องการลบรูปใช่หรือไม่?',
+    showCancelButton: true,
+  });
+
+  if (res.isConfirmed) {
+    await Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      showCancelButton: false,
+      timer: 1000,
+      timerProgressBar: true,
+    });
+
+    try {
+      await axios.delete(`${config.urlApi}/uploadImages/${pfID}`);
+      fetchImages(); // รีเฟรชข้อมูลรูปภาพ
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to delete image',
+      });
+    }
+  }
+};
+
+
+useEffect(() => {
+  const fetchStatus = async () => {
+      try {
+          const response = await axios.get(config.urlApi+`/checkStatusReport/${id}`);
+          setStatusActivity(response.data.result.status_activity);
+      } catch (err) {
+          setError('Error fetching data');
+      } finally {
+          setLoading(false);
+      }
+  };
+
+  fetchStatus();
+}, [id]);
 
 
 return (
@@ -109,8 +167,18 @@ return (
        <div className="col-md-12 d-flex justify-content-center">
         {showImages.length > 0 ? (
           showImages.map((image) => (
+           
             <div key={image.id}>
+            {statusActivity === '3' ?(<></>):(
+               <Tooltip placement='top' title="ลบรูปภาพ">
+                <button className="btn btn-danger rounded-circle shadow"  onClick={(e) => handleRemoveProfile(image.id)}>
+            <DeleteIcon/>
+            </button>
+            </Tooltip>
+              )
+            }
              <div className="card">
+           
             <div className="card-body d-flex justify-content-center align-items-center flex-wrap">
             <label htmlFor="fileInput">
                   <img
@@ -121,6 +189,7 @@ return (
                 </label>
               </div>
               </div>
+            
             </div>
           ))
         ) : (
@@ -128,6 +197,7 @@ return (
              <center className='fw-bold mt-3'>กรุณาอัพโหลดไฟล์ภาพโปรไฟล์ขององค์กร</center>
              <sub className='text- text-center mt-2'>(Upload รูปภาพองค์กร มีขนาดไม่เกิน 2 MB สูงสุด 5 ภาพ )</sub> 		
             <div className="card-body d-flex justify-content-center align-items-center flex-wrap">
+             
               {imageLocations.map((image, index) => (
                 <Tooltip title={'กดคลิกที่รูปกล้องถ่ายรูปและเลือกไฟล์เพื่อ upload '} placement="top" >
                 <div key={index} style={{ position: 'relative', marginRight: '10px', marginBottom: '10px' }}>

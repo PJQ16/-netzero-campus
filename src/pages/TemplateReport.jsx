@@ -60,12 +60,9 @@ export default function TemplateReport() {
                     <tr>
                         <th className='text-center'>รวม</th>
                         <th className='text-center'>
-                        {data.map((item, index) => (
-                         item.head_name === 'ภาคการดูดกลับ (GHG Removal)' ? (<>-</>) :(<></>)
-                        ))}
-
-{data.reduce((acc, item) => acc + parseFloat(item.tCO2e), 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                        </th>
+                        {data.some(item => item.head_name === 'ภาคการดูดกลับ (GHG Removal)') ? '-' : ''}
+                        {data.reduce((acc, item) => acc + parseFloat(item.tCO2e), 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </th>
                     </tr>
                 </tfoot>
             </table>
