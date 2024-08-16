@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import config from "../config";
-
+import CheckIcon from '@mui/icons-material/Check';
+import ClearIcon from '@mui/icons-material/Clear';
 export default function VerifyEmail() {
   const { token } = useParams(); // เรียกใช้ useParams เป็นฟังก์ชัน
   const [message, setMessage] = useState("");
@@ -32,9 +33,12 @@ export default function VerifyEmail() {
         {message === 'Invalid or expired token' ? 
         <>
          <h5 className="card-title fw-bold" style={{fontSize:'20px'}}>{message}</h5>
-        <img src="https://png.pngtree.com/png-vector/20220527/ourmid/pngtree-red-grunge-expired-rubber-stamp-png-image_4750216.png"
-        alt="expried"
-        className="w-100" />
+        <ClearIcon sx={{
+          width: 400,     // กำหนดความกว้างของไอคอน
+          height: 300,    // กำหนดความสูงของไอคอน
+          color: 'red'  // กำหนดสีของไอคอน
+        }}
+        />
         <p className="card-text fw-bold" style={{fontSize:'20px'}}>
          Your token has expired
         </p>
@@ -46,9 +50,13 @@ export default function VerifyEmail() {
         :
         <>
         <h5 className="card-title">Verify your email</h5>
-        <img src="https://cdn.prod.website-files.com/639c99568848490eb3265dae/64c2c8ec1a7ebea427df2374_Open%%20Image%20-%20Verified%20Email.png"
-        alt="verify"
-        className="w-100" />
+        <CheckIcon
+        sx={{
+          width: 400,     // กำหนดความกว้างของไอคอน
+          height: 300,    // กำหนดความสูงของไอคอน
+          color: 'green'  // กำหนดสีของไอคอน
+        }}
+        />
         <p className="card-text fw-bold" style={{fontSize:'20px'}}>
         คุณสามารถเข้าสู่ระบบและใช้งานระบบรายงานการปล่อยก๊าซเรือนกระจกของเราได้แล้ว
           <p>{message}</p>

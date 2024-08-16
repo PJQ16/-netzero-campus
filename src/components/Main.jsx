@@ -161,7 +161,7 @@ function Main() {
                 <div className="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-8-tablet">
                   <div className="mdc-card">
                     <div className="d-flex d-lg-block d-xl-flex justify-content-between">
-                      <h6 className="card-title">รายชื่อมหาวิทยาลัยที่รายงาน <br/> <small style={{fontSize:'14px'}}>(เป็นข้อมูลของมหาวิทยาลัยที่รายงานข้อมูลเข้ามาแล้ว)</small></h6>
+                      <h6 className="card-title">รายชื่อมหาวิทยาลัยที่รายงาน</h6>
                      
                     </div>
                     
@@ -249,7 +249,7 @@ function Main() {
                             },
                           ]}
                           width={300}
-                          height={700}
+                          height={800}
                           slotProps={{
                             legend: {
                               direction: "column",
@@ -413,7 +413,7 @@ function Main() {
       },
     ]}
     width={300}
-    height={600}
+    height={800}
     slotProps={{
       legend: {
         direction: "column",

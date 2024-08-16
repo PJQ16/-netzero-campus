@@ -258,13 +258,13 @@ function TabActivity({
                                         </td>
                                         <td className="text-center">
                                           {activity.name ===
-                                          "ขอบเขตที่ 1: การปล่อยและดูดกลับก๊าซเรือนกระจกทางตรง"
+                                          "ขอบเขตที่ 1 การปล่อยและดูดกลับก๊าซเรือนกระจกทางตรง :"
                                             ? parseFloat(data_scope.EF).toFixed(4)
                                             : parseFloat(data_scope.kgCO2e).toFixed(4)}
                                         </td>
                                         <td className="text-center">
                                           {activity.name ===
-                                          "ขอบเขตที่ 1: การปล่อยและดูดกลับก๊าซเรือนกระจกทางตรง"
+                                          "ขอบเขตที่ 1 การปล่อยและดูดกลับก๊าซเรือนกระจกทางตรง :"
                                             ? parseFloat(
                                                 (parseFloat(data_scope.EF) *
                                                   parseFloat(
