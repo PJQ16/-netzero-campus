@@ -14,7 +14,7 @@ const StyledText = styled('text')(({ theme }) => ({
 
 const StyledPieChart = styled(PieChart)(({ theme }) => ({
   width: '100%',
-  height: '100%', // เปลี่ยน height เป็น 100% เพื่อให้กราฟใช้ขนาดจากคอนเทนเนอร์ที่ห่อหุ้ม
+  height: '100%',
   [theme.breakpoints.up('sm')]: {
     width: '100%',
   },
@@ -44,6 +44,25 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
     'Removal': '#312509',
   };
 
+  // คำนวณผลรวมของขอบเขต 1 และ 2
+  const totalScope1And2 = scopeData.reduce((acc, item) => {
+    if (item.name === 'ขอบเขตที่ 1 การปล่อยก๊าซเรือนกระจกทางตรง :' || 
+        item.name === 'ขอบเขตที่ 2 การปล่อยก๊าซเรือนกระจกทางอ้อม :') {
+      return acc + parseFloat(item.tco2e);
+    }
+    return acc;
+  }, 0);
+
+  // คำนวณผลรวมของขอบเขต 1, 2 และ 3
+  const totalScope1And2And3 = scopeData.reduce((acc, item) => {
+    if (item.name === 'ขอบเขตที่ 1 การปล่อยก๊าซเรือนกระจกทางตรง :' || 
+        item.name === 'ขอบเขตที่ 2 การปล่อยก๊าซเรือนกระจกทางอ้อม :' || 
+        item.name === 'ขอบเขตที่ 3 การปล่อยก๊าซเรือนกระจกทางอ้อม :') {
+      return acc + parseFloat(item.tco2e);
+    }
+    return acc;
+  }, 0);
+
   return (
     <div>
       <div className="row">
@@ -54,12 +73,12 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
             <div className="card-body">
               <div style={{ height: '600px' }}> {/* กำหนด height สำหรับคอนเทนเนอร์ */}
               <StyledPieChart
-  margin={{ top: 70, bottom: 70, left: 70, right: 70 }} // ปรับ margin ให้มากขึ้น
+  margin={{ top: 70, bottom: 70, left: 70, right: 70 }}
   slotProps={{
     legend: {
       direction: 'column',
       position: { vertical: 'bottom', horizontal: 'left' },
-      padding:{ top: 0, bottom: 0, left: 0, right: 0 }
+      padding: { top: 0, bottom: 0, left: 0, right: 0 }
     },
   }}
   series={[
@@ -77,16 +96,25 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
           color: colors[item.name] || 'gray',
         })),
       arcLabel: (item) => {
-        const percentage = percentages.find((p) => p.label === item.label)?.percentage;
-        if (parseFloat(percentage) === 0) {
-          return '';
-        }
-        return isNaN(parseFloat(percentage)) ? '' : `${percentage}%`;
+        // คำนวณหาผลรวมของขอบเขตที่ 1, 2 และ 3
+        const totalValue = scopeData
+          .filter(item => 
+            item.name === 'ขอบเขตที่ 1 การปล่อยก๊าซเรือนกระจกทางตรง :' || 
+            item.name === 'ขอบเขตที่ 2 การปล่อยก๊าซเรือนกระจกทางอ้อม :' || 
+            item.name === 'ขอบเขตที่ 3 การปล่อยก๊าซเรือนกระจกทางอ้อม :'
+          )
+          .reduce((acc, curr) => acc + parseFloat(curr.tco2e), 0);
+
+        // คำนวณสัดส่วนของแต่ละ item
+        const percentage = (parseFloat(item.value) / totalValue) * 100;
+
+        // ตรวจสอบว่าสัดส่วนเป็น NaN หรือไม่
+        return isNaN(percentage) ? '' : `${percentage.toFixed(2)}%`;
       },
       highlightScope: { faded: 'global', highlighted: 'item' },
-      faded: { innerRadius: 40, additionalRadius: -40, color: 'gray' }, // ขยายขนาดของ faded area
-      innerRadius: 120, // ขยายขนาดของ innerRadius
-      outerRadius: 200, // ขยายขนาดของ outerRadius
+      faded: { innerRadius: 40, additionalRadius: -40, color: 'gray' },
+      innerRadius: 120,
+      outerRadius: 200,
       paddingAngle: 3,
       cornerRadius: 10,
       endAngle: 360,
@@ -108,59 +136,68 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
                   <thead>
                     <tr >
                       <th className="text-center">ขอบเขต</th>
-                      <th className="text-center">Greenhouse Gas Emissions (tCO<sub>2</sub>e)</th>
-                      <th className="text-center">Ratio Scope 1 and 2</th>
-                      <th className="text-center">Ratio Scope 1 and 2 3</th>
+                      <th className="text-center">การปล่อยก๊าซเรือนกระจก (tCO<sub>2</sub>e)</th>
+                      <th className="text-center">สัดส่วนเมื่อเทียบขอบเขต 1 และ 2</th>
+                      <th className="text-center">สัดส่วนเมื่อเทียบขอบเขต 1, 2 และ 3</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {scopeData.map((item, index) => (
-                      <tr className="text-center" key={index}>
-                        <td className="text-start">{item.name}</td>
-                        <td>
-                         {item.name === 'GHG Removal' ? '-' : ''}
-                          {parseFloat(item.tco2e).toLocaleString('en-US', {minimumFractionDigits: 2 })}
-                          
+                    {scopeData.map((item, index) => {
+                      if (item.name === 'ภาคการดูดกลับ (GHG Removal)') {
+                        return null; // ไม่แสดง GHG Removal
+                      }
+
+                      const tco2e = parseFloat(item.tco2e);
+
+                      // คำนวณสัดส่วนเมื่อเทียบกับขอบเขต 1 และ 2
+                      const percentageScope1And2 = 
+                        (item.name === 'ขอบเขตที่ 1 การปล่อยก๊าซเรือนกระจกทางตรง :' || 
+                        item.name === 'ขอบเขตที่ 2 การปล่อยก๊าซเรือนกระจกทางอ้อม :') && totalScope1And2 > 0
+                          ? ((tco2e / totalScope1And2) * 100).toFixed(2)
+                          : '0.00';
+
+                      // คำนวณสัดส่วนเมื่อเทียบกับขอบเขต 1, 2 และ 3
+                      const percentageScope1And2And3 = 
+                        (item.name === 'ขอบเขตที่ 1 การปล่อยก๊าซเรือนกระจกทางตรง :' || 
+                        item.name === 'ขอบเขตที่ 2 การปล่อยก๊าซเรือนกระจกทางอ้อม :' || 
+                        item.name === 'ขอบเขตที่ 3 การปล่อยก๊าซเรือนกระจกทางอ้อม :') && totalScope1And2And3 > 0
+                          ? ((tco2e / totalScope1And2And3) * 100).toFixed(2)
+                          : '0.00';
+
+                      return (
+                        <tr className="text-center" key={index}>
+                          <td className="text-start">
+                            {item.name === 'รายงานแยก :' ?(<>อื่น {`(${item.name})`}</>) :(<>{item.name}</>)}
                           </td>
-                        <td>
-                          {item.name === 'scope1' || item.name === 'scope2'
-                            ? (
-                                isNaN(percentages.find((p) => p.label === item.name)?.percentage)
-                                  ? '0.00'
-                                  : percentages.find((p) => p.label === item.name)?.percentage
-                              ) || '0.00'
-                            : '-'}
-                        </td>
-                        <td>
-                          {(isNaN(percentages.find((p) => p.label === item.name)?.percentage)
-                            ? '0.00'
-                            : percentages.find((p) => p.label === item.name)?.percentage) || '0.00'}
-                        </td>
-                      </tr>
-                    ))}
+                          <td>
+                            {tco2e.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                          </td>
+                          <td>
+                            {percentageScope1And2}%
+                          </td>
+                          <td>
+                            {percentageScope1And2And3}%
+                          </td>
+                        </tr>
+                      );
+                    })}
+
                     <tr className="text-center">
-                      <td className="text-start">ผลรวม Scope 1 & 2</td>
+                      <td className="text-start">รวมขอบเขต 1 & 2</td>
                       <td>
-                        {scopeData
-                          .reduce((acc, item) => {
-                            if (item.name === 'ขอบเขตที่ 1: การปล่อยและดูดกลับก๊าซเรือนกระจกทางตรง' || item.name === 'ขอบเขตที่ 2: การปล่อยก๊าซเรือนกระจกทางอ้อม') {
-                              return acc + parseFloat(item.tco2e);
-                            }
-                            return acc;
-                          }, 0)
-                          .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        {totalScope1And2.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </td>
-                      <td>100</td>
+                      <td>100%</td>
                       <td>-</td>
                     </tr>
+
                     <tr className="text-center">
-                      <td className="text-start">ผลรวม Scope 1 & 2 & 3</td>
+                      <td className="text-start">รวมขอบเขต 1 & 2 & 3</td>
                       <td>
-                        {scopeData.reduce((acc, item) => acc + parseFloat(item.tco2e), 0)
-                          .toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        {totalScope1And2And3.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </td>
                       <td>-</td>
-                      <td>100</td>
+                      <td>100%</td>
                     </tr>
                   </tbody>
                 </table>

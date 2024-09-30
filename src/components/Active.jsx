@@ -244,7 +244,7 @@ function Active() {
                           }}
                         />
                       ) : (
-                        <p>No data available</p> // แสดงข้อความถ้าไม่มีข้อมูล
+                        <p >No data available</p> // แสดงข้อความถ้าไม่มีข้อมูล
                       )}
                     </div>
                   </div>

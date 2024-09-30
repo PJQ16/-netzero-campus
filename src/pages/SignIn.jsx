@@ -206,7 +206,7 @@ const handlerLogin = async () => {
                   ลงทะเบียน
                 </button>
               </Link>
-            </div>
+            </div> 
           </div>
         </MDBCol>
 

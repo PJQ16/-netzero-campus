@@ -14,7 +14,6 @@ const PolicyPage = () => {
     if (policyShown) {
       // หากเคยแสดงนโยบายแล้ว ให้ redirect ไปที่หน้า dashboard
       navigate('/dashboard');
-      window.location.reload();
     } else {
       handlePolicyAcceptance();
     }
@@ -101,7 +100,7 @@ const PolicyPage = () => {
       if (result.isConfirmed) {
         localStorage.setItem('policyShown', 'true');
         navigate('/dashboard');
-        window.location.reload();
+        window.location.reload()
       }
     });
   };

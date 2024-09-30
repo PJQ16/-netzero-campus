@@ -174,7 +174,7 @@ function Main() {
                     <li className="list-group-item d-flex justify-content-start align-items-center">
                       <p className="card-text ms-2">
                         <small className="text-body-secondary fw-bold">
-                          {index + 1} {approved.fac_name}
+                          {index + 1}. {approved.fac_name}
                         </small>
                       </p>
                     </li>

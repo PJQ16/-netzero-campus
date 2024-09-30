@@ -182,10 +182,7 @@ function ActiveDashboard() {
     });
   };
 
-  const totalEmission = dashboard.totalYear.reduce(
-    (acc, curr) => acc + parseFloat(curr.tCO2e),
-    0
-  );
+ 
 
   const updatedTest = test.map((item) => {
     const apiData = dashboard.totalYear
@@ -193,7 +190,17 @@ function ActiveDashboard() {
       : null;
     return { ...item, tCO2e: apiData ? parseFloat(apiData.tCO2e) : 0 };
   });
-
+  
+  const scopeItems = updatedTest.filter(item =>
+    ["Scope 1", "Scope 2", "Scope 3"].includes(item.num)
+  );
+  
+  // คำนวณผลรวมของ tCO2e สำหรับ Scope 1, Scope 2, และ Scope 3
+  const totalEmission = scopeItems.reduce((acc, item) => {
+    return acc + parseFloat(item.tCO2e || 0); // ถ้า tCO2e เป็น undefined ให้ใช้ค่า 0
+  }, 0);
+  
+  // อัปเดตค่าของ TOTAL EMISSION
   const totalEmissionIndex = updatedTest.findIndex(
     (item) => item.num === "TOTAL EMISSION"
   );

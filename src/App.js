@@ -232,11 +232,7 @@ function App() {
     });
   };
 
-  // Calculate total emission
-  const totalEmission = dashboard.totalYear.reduce(
-    (acc, curr) => acc + parseFloat(curr.tCO2e),
-    0
-  );
+  
 
   // Update tCO2e in the original test array
   const updatedTest = test.map((item) => {
@@ -246,13 +242,23 @@ function App() {
     return { ...item, tCO2e: apiData ? parseFloat(apiData.tCO2e) : 0 };
   });
 
-  // Find and update the TOTAL EMISSION item in the updatedTest array
-  const totalEmissionIndex = updatedTest.findIndex(
-    (item) => item.num === "TOTAL EMISSION"
-  );
-  if (totalEmissionIndex !== -1) {
-    updatedTest[totalEmissionIndex].tCO2e = totalEmission;
-  }
+  // กรองเฉพาะ Scope 1, Scope 2, และ Scope 3
+const scopeItems = updatedTest.filter(item =>
+  ["Scope 1", "Scope 2", "Scope 3"].includes(item.num)
+);
+
+// คำนวณผลรวมของ tCO2e สำหรับ Scope 1, Scope 2, และ Scope 3
+const totalEmission = scopeItems.reduce((acc, item) => {
+  return acc + parseFloat(item.tCO2e || 0); // ถ้า tCO2e เป็น undefined ให้ใช้ค่า 0
+}, 0);
+
+const totalEmissionIndex = updatedTest.findIndex(
+  (item) => item.num === "TOTAL EMISSION"
+);
+if (totalEmissionIndex !== -1) {
+  updatedTest[totalEmissionIndex].tCO2e = totalEmission;
+}
+
 
   useEffect(() => {
     // จัดกลุ่มและนับจำนวนข้อมูลจาก listHead โดยใช้ id
@@ -390,7 +396,7 @@ function App() {
             <Route path='/login' element={<SignIn />} />
             <Route path='/about' element={<Home />} />
             <Route path='/' element={<NewDashBoard />} />
-            <Route path='/signUp' element={<SignUp  />} />
+            <Route path='/signUp' element={<SignUp  />} /> 
             <Route path='/activitydata' element={<Demo  />} />
             <Route path='/dashboard' element={<ActiveDashboard  />} />
             <Route path='/reference' element={<Reference />} />
