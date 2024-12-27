@@ -165,7 +165,7 @@ function Main() {
                      
                     </div>
                     
-                    <div className="chart-container mt-4">
+                    <div className="chart-container mt-4" style={{ maxHeight: '290px', overflowY: 'auto',maxWidth:'500px' }}>
                     <ul className="list-group">
                              
                     {approve.length > 0 ? (

@@ -43,7 +43,7 @@ export default function TemplateReport() {
                 <thead>
                     <tr>
                         <th className='text-center'>แหล่งปล่อยก๊าซเรือนกระจก</th>
-                        <th className='text-center'>รวมปริมาณ ก๊าซเรือนกระจก (Ton CO2e)</th>
+                        <th className='text-center'>รวมปริมาณ ก๊าซเรือนกระจก (tCO<sub>2</sub>e)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -135,27 +135,27 @@ export default function TemplateReport() {
                             <tr>
                                 <td className='text-start'>ประเภทที่ 1</td>
                                 <td className='text-center'>{calculateTotal(information.scope1).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                <td className='text-center'>Ton CO<sub>2</sub>e</td>
+                                <td className='text-center'>tCO<sub>2</sub>e</td>
                             </tr>
                             <tr>
                                 <td className='text-start'>ประเภทที่ 2</td>
                                 <td className='text-center'>{calculateTotal(information.scope2).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                <td className='text-center'>Ton CO<sub>2</sub>e</td>
+                                <td className='text-center'>tCO<sub>2</sub>e</td>
                             </tr>
                             <tr>
                                 <td className='text-start'>ประเภทที่ 3</td>
                                 <td className='text-center'>{calculateTotal(information.scope3).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                <td className='text-center'>Ton CO<sub>2</sub>e</td>
+                                <td className='text-center'>tCO<sub>2</sub>e</td>
                             </tr>
                             <tr>
                                 <td className='text-start'>รายงานแยก</td>
                                 <td className='text-center'>{calculateTotal(information.separate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                <td className='text-center'>Ton CO<sub>2</sub>e</td>
+                                <td className='text-center'>tCO<sub>2</sub>e</td>
                             </tr>
                             <tr>
                                 <td className='text-start'>ภาคดูดกลับ</td>
                                 <td className='text-center'>-{calculateTotal(information.removal).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                                <td className='text-center'>Ton CO<sub>2</sub>e</td>
+                                <td className='text-center'>tCO<sub>2</sub>e</td>
                             </tr>
                             <tr>
                                 <td className='text-start'>ผลผลิต(พื้นที่ใช้สอย)</td>
@@ -167,14 +167,14 @@ export default function TemplateReport() {
                                 <td className='text-center'>
                                 {((parseFloat(calculateTotal(information.scope1)) + parseFloat(calculateTotal(information.scope2))) / parseFloat(area)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                 </td>
-                                <td className='text-center'>Ton CO<sub>2</sub>e/m<sup>2</sup></td>
+                                <td className='text-center'>tCO<sub>2</sub>e/m<sup>2</sup></td>
                             </tr>
                             <tr>
                                 <td className='text-start'>Carbon Intensity (Scope 1 + 2 + 3)</td>
                                 <td className='text-center'>
                                     {((parseFloat(calculateTotal(information.scope1)) + parseFloat(calculateTotal(information.scope2)) + parseFloat(calculateTotal(information.scope3))) / parseFloat(area)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                 </td>
-                                <td className='text-center'>Ton CO<sub>2</sub>e/m<sup>2</sup></td>
+                                <td className='text-center'>tCO<sub>2</sub>e/m<sup>2</sup></td>
                             </tr>
                         </tbody>
                     </table>

@@ -167,16 +167,34 @@ export default function TabActivitySummary({ scopeData, percentages, years }) {
                       return (
                         <tr className="text-center" key={index}>
                           <td className="text-start">
-                            {item.name === 'รายงานแยก :' ?(<>อื่น {`(${item.name})`}</>) :(<>{item.name}</>)}
+                            {item.name === 'รายงานแยก :' ?(<>อื่นๆ {`(${item.name})`}</>) :(<>{item.name}</>)}
                           </td>
                           <td>
                             {tco2e.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                           </td>
                           <td>
-                            {percentageScope1And2}%
+                            {item.name === 'รายงานแยก :' || item.name === 'ขอบเขตที่ 3 การปล่อยก๊าซเรือนกระจกทางอ้อม :' ?
+                            (<>
+                            -
+                            </>) 
+                            :
+                            (<>
+                             {percentageScope1And2}%
+                            </>)
+                            }
                           </td>
                           <td>
-                            {percentageScope1And2And3}%
+                            {item.name === 'รายงานแยก :' ?
+                            (
+                              <>
+                              -
+                              </>
+                            ) :
+                            (<>
+                               {percentageScope1And2And3}%
+                            </>)
+                    
+                            }
                           </td>
                         </tr>
                       );
